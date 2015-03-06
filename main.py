@@ -28,6 +28,9 @@ import pickle
 import pygame
 import sys
 
+from normal import *
+
+
 
 
 
@@ -55,6 +58,7 @@ class game:
         disp_width = 600
         disp_height = 600
             
+        press=0    
             
         gameDisplay=pygame.display.get_surface()
         
@@ -104,6 +108,15 @@ class game:
             
             if pane2.get_rect(center=(390+80+120,150+50)).collidepoint(mos_x,mos_y):
                 gameDisplay.blit(pygame.transform.scale(pane2,(420,90)),(385,150))
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    a=pane2window()
+                    a=a.run(gameDisplay,info)
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0 
+                
+
             else:
                 gameDisplay.blit(pane2,(390,150)) # 2pane
                 
