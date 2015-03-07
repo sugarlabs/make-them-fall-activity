@@ -324,17 +324,13 @@ class pane2window:
             
             
             
-            if leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis1+5,y_axis1) \
-              or leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis2+5,y_axis2) \
-              or leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axisa+5,y_axisa) \
-              or leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axisb+5,y_axisb):
+            if leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis1+8,y_axis1) \
+              or leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis2+8,y_axis2):
                 collide.play(0)
                 return score
             
-            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axis1+5,y_axis1) \
-              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axis2+5,y_axis2) \
-              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisa+5,y_axisa) \
-              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisb+5,y_axisb):
+            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisa+8,y_axisa) \
+              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisb+8,y_axisb):
                 collide.play(0)
                 return score
             

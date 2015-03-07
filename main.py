@@ -83,6 +83,7 @@ class game:
             paneheart2=pygame.image.load("data/images/welcomescreen/2paneheart.png")
             background=pygame.image.load("data/images/welcomescreen/background.png")
             
+            maxnormal=0
             
             
             
@@ -112,6 +113,14 @@ class game:
                     press=1
                     a=pane2window()
                     a=a.run(gameDisplay,info)
+                    fh = open("score.txt", "r")
+                    maxnormal = int(fh.readline())
+                    fh.close()
+                    if a>maxnormal:
+                        fh = open("score.txt", "w")
+                        fh.write(str(a))
+                        fh.close()
+                        
                     
                 if event.type==pygame.MOUSEBUTTONUP:
                     press=0 
