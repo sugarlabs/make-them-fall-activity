@@ -7,40 +7,6 @@ from random import *
 
 
 
-pygame.init()
-sound=True
-        
-try:
-    pygame.mixer.init()
-except Exception, err:
-    sound=False
-    print 'error with sound', error
-            
-black=(0,0,0)
-white=(255,255,255)
-clock=pygame.time.Clock()
-timer=pygame.time.Clock()
-            
-  
-disp_width = 600
-disp_height = 600
-            
-            
-
-            
-gameDisplay=pygame.display.get_surface()
-        
-if not(gameDisplay):
-    info=pygame.display.Info()
-    gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
-            
-    pygame.display.set_caption("Make Them Fall")
-    gameicon=pygame.image.load('data/images/icon.png')
-    pygame.display.set_icon(gameicon)
-
-
-
-
 
 
 
@@ -57,7 +23,9 @@ class pane3window:
         orientation6=0
         
         leftmove=350
-        rightmove=555
+        midmove=555
+        rightmove=761
+        
         limit1=limit2=0
         
         
@@ -74,6 +42,9 @@ class pane3window:
         y_axisa=750
         y_axisb=y_axisa+370
         
+        y_axisx=761
+        y_axisy=y_axisx+370
+        
         
         
         leftquad=leftman
@@ -82,8 +53,8 @@ class pane3window:
         
         
         
-        f1=f2=0
-        m1=m2=0
+        f1=f2=f3=0
+        m1=m2=m3=0
         time1=time2=0
         
         font_path = "fonts/comicsans.ttf"
@@ -93,6 +64,7 @@ class pane3window:
            
         x_axis1=x_axis2=350
         x_axisa=x_axisb=659
+        x_axisx=x_axisy=761
         speed=7
         flag=1
         
@@ -147,17 +119,22 @@ class pane3window:
                 
                     
                     
-            if event.type==pygame.KEYDOWN and event.key==275 and f2==0:
+            if event.type==pygame.KEYDOWN and event.key==274 and f2==0:
                 jump.play(0)
                 f2=1
                 m2=1        #start moving
                 
-               
-                
+             
+            if event.type==pygame.KEYDOWN and event.key==275 and f3==0:
+                jump.play(0)
+                f3=1
+                m3=1        #start moving
+                  
+              
                 
             # Check for when to stop
             
-            if leftmove>484+20:
+            if leftmove>484+20:         #left move
                 leftquad=rightman
                 m1=f1=0
                 leftmove=484+20
@@ -169,19 +146,31 @@ class pane3window:
                 leftmove=350
                 time1=0
                 
-            if rightmove<555:
-                rightquad=leftman
+            if midmove<555:                 #mid move
+                midquad=leftman
                 m2=f2=0
-                rightmove=555
+                midmove=555
                 time2=0
                 
-            if rightmove>690+20:
-                rightquad=rightman
+            if midmove>690+20:
+                midquad=rightman
                 m2=f2=0
-                rightmove=690+20
+                midmove=690+20
                 time2=0 
                 
-           
+               
+            if rightmove<761:               #right move move
+                rightquad=leftman
+                m3=f3=0
+                rightmove=761
+                time2=0
+                
+            if rightmove>761+156:
+                rightquad=rightman
+                m3=f3=0
+                rightmove=761+156
+                time2=0 
+            
            
                
             if m1==1:
@@ -195,11 +184,25 @@ class pane3window:
             if m2==1:
                 
                 
+                if midquad==leftman:
+                    midmove+=30
+                if midquad==rightman:
+                    midmove-=30
+                time2+=1
+                
+                
+            if m3==1:
+                
+                
                 if rightquad==leftman:
                     rightmove+=30
                 if rightquad==rightman:
                     rightmove-=30
                 time2+=1
+                
+                
+             
+            
                
                 
                 
@@ -216,6 +219,10 @@ class pane3window:
                 gameDisplay.blit(leftquad,(leftmove,100))
                 
              
+            if midquad==leftman or midquad==rightman:
+                gameDisplay.blit(midquad,(midmove,100))
+            
+            
             if rightquad==leftman or rightquad==rightman:
                 gameDisplay.blit(rightquad,(rightmove,100))
             
@@ -243,24 +250,43 @@ class pane3window:
            
             
             
-            # right side spikes
-            if orientation4==0:
+            # mid side spikes
+            if orientation3==0:
                 x_axisa=555
                 gameDisplay.blit(lspike,(x_axisa,y_axisa))
             
-            if orientation4==1:
+            if orientation3==1:
                 x_axisa=691
                 gameDisplay.blit(rspike,(x_axisa,y_axisa))
             
             
-            if orientation5==0:
+            if orientation4==0:
                 x_axisb=555
                 gameDisplay.blit(lspike,(x_axisb,y_axisb))
             
-            if orientation5==1:
+            if orientation4==1:
                 x_axisb=691
                 gameDisplay.blit(rspike,(x_axisb,y_axisb))
             
+            
+            #right side spikes
+            
+            if orientation5==0:
+                x_axisx=761
+                gameDisplay.blit(lspike,(x_axisx,y_axisx))
+            
+            if orientation5==1:
+                x_axisx=761+136
+                gameDisplay.blit(rspike,(x_axisx,y_axisx))
+            
+            
+            if orientation6==0:
+                x_axisy=761
+                gameDisplay.blit(lspike,(x_axisy,y_axisy))
+            
+            if orientation6==1:
+                x_axisy=761+136
+                gameDisplay.blit(rspike,(x_axisy,y_axisy))
             
             
                 
@@ -272,25 +298,33 @@ class pane3window:
             y_axisa-=speed
             y_axisb-=speed
             
-            if score==25 or score==65 or score==90:
+            y_axisx-=speed
+            y_axisy-=speed
+            
+            
+            
+            
+            
+            if score==25 or score==55 or score==70:
                 flag=1
             
             if score==25 and flag==1 :
                 flag=0
                 speed+=0.1
                 
-            if score==30 and flag==1:
+            if score==55 and flag==1:
                 flag=0
                 speed+=0.1
                 
-            if score==40 and flag==1:
+            if score==70 and flag==1:
                 flag=0
                 speed+=0.1
                 
             
             
             
-            if y_axis1<=-40 or y_axis2<=-40 or y_axisa<=-40 or y_axisb<=-40 :
+            if y_axis1<=-40 or y_axis2<=-40 or y_axisa<=-40 or y_axisb<=-40 or \
+               y_axisx<=-40 or y_axisy<=-40:
                 scoremusic.play(0)
                 score+=1
             
@@ -309,15 +343,29 @@ class pane3window:
                 
             
             if(y_axisa<-40):
-                orientation4=randint(0,1)
+                orientation3=randint(0,1)
                 
                 y_axisa=700
                 
             
             if(y_axisb<-40):
-                orientation5=randint(0,1)
+                orientation4=randint(0,1)
                 
                 y_axisb=700
+                
+            
+            
+            
+            if(y_axisx<-40):
+                orientation5=randint(0,1)
+                
+                y_axisx=700
+                
+            
+            if(y_axisy<-40):
+                orientation6=randint(0,1)
+                
+                y_axisy=700
                 
             
                 
@@ -325,7 +373,7 @@ class pane3window:
             
             
             scores=font1.render(str(score),1,(0,0,0)) 
-            gameDisplay.blit(scores,(200+650+20,30))
+            gameDisplay.blit(scores,(200+650,30))
             
             
             
@@ -333,15 +381,25 @@ class pane3window:
             
             if leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis1+8,y_axis1) \
               or leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis2+8,y_axis2):
-                collide.play(0)
+                pygame.mixer.music.load("data/sound/fall.wav")
+                pygame.mixer.music.play(0)
+                #collide.play(0)
                 return score
             
-            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisa+8,y_axisa) \
-              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisb+8,y_axisb):
-                collide.play(0)
+            if midquad.get_rect(center=(midmove+5,100+10)).collidepoint(x_axisa+8,y_axisa) \
+              or midquad.get_rect(center=(midmove+5,100+10)).collidepoint(x_axisb+8,y_axisb):
+                pygame.mixer.music.load("data/sound/fall.wav")
+                pygame.mixer.music.play(0)
+                #collide.play(0)
                 return score
             
             
+            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisx+8,y_axisx) \
+              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisy+8,y_axisy):
+                pygame.mixer.music.load("data/sound/fall.wav")
+                pygame.mixer.music.play(0)
+                #collide.play(0)
+                return score
             
             
             
@@ -366,5 +424,3 @@ class pane3window:
             sys.exit()
             
 
-a=pane3window()
-a.run(gameDisplay,info)

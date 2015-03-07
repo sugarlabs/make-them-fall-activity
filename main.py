@@ -29,6 +29,7 @@ import pygame
 import sys
 
 from normal import *
+from nightmare import *
 
 
 
@@ -84,9 +85,24 @@ class game:
             background=pygame.image.load("data/images/welcomescreen/background.png")
             
             maxnormal=0
+            maxnightmare=0
             
+            font_path = "fonts/arial.ttf"
+            font_size = 18
+            font1= pygame.font.Font(font_path, font_size)
+            font1.set_bold(True)
             
+            # Score read
+            fh = open("score.txt", "r")
+            maxnormal = int(fh.readline())
+            fh.close()
             
+            fh = open("score.txt", "r")
+            maxnightmare = int(fh.readline())
+            fh.close()
+            
+            maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
+            maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
             
         
         while not crashed:
@@ -120,6 +136,9 @@ class game:
                         fh = open("score.txt", "w")
                         fh.write(str(a))
                         fh.close()
+                        maxnormal=a
+                        
+                    maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
                         
                     
                 if event.type==pygame.MOUSEBUTTONUP:
@@ -133,6 +152,28 @@ class game:
             
             if pane3.get_rect(center=(390+60,250+50)).collidepoint(mos_x,mos_y):
                 gameDisplay.blit(pygame.transform.scale(pane3,(135,95)),(385,250))
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    a=pane3window()
+                    a=a.run(gameDisplay,info)
+                    fh = open("score.txt", "r")
+                    maxnightmare = int(fh.readline())
+                    fh.close()
+                    if a>maxnightmare:
+                        fh = open("score.txt", "w")
+                        fh.write(str(a))
+                        fh.close()
+                        maxnightmare=a
+                        
+                    maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0)) 
+                        
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0 
+                
+                
+                
+                
             else:
                 gameDisplay.blit(pane3,(390,250)) # 3pane
             
@@ -187,9 +228,11 @@ class game:
                 
             
             
+            #Scores Display           
             
-           
             
+            gameDisplay.blit(maxnormal,(540,200))
+            gameDisplay.blit(maxnightmare,(400,300))
             
             
                 

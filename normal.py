@@ -5,41 +5,7 @@ import pygame
 import sys
 from random import *
 
-'''
 
-pygame.init()
-sound=True
-        
-try:
-    pygame.mixer.init()
-except Exception, err:
-    sound=False
-    print 'error with sound', error
-            
-black=(0,0,0)
-white=(255,255,255)
-clock=pygame.time.Clock()
-timer=pygame.time.Clock()
-            
-  
-disp_width = 600
-disp_height = 600
-            
-            
-
-            
-gameDisplay=pygame.display.get_surface()
-        
-if not(gameDisplay):
-    info=pygame.display.Info()
-    
-    gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
-            
-    pygame.display.set_caption("Make Them Fall")
-    gameicon=pygame.image.load('data/images/icon.png')
-    pygame.display.set_icon(gameicon)
-
-'''
 
 class pane2window:
     
@@ -265,18 +231,18 @@ class pane2window:
             y_axisa-=speed
             y_axisb-=speed
             
-            if score==25 or score==65 or score==90:
+            if score==25 or score==55 or score==70:
                 flag=1
             
             if score==25 and flag==1 :
                 flag=0
                 speed+=0.1
                 
-            if score==30 and flag==1:
+            if score==55 and flag==1:
                 flag=0
                 speed+=0.1
                 
-            if score==40 and flag==1:
+            if score==70 and flag==1:
                 flag=0
                 speed+=0.1
                 
@@ -318,7 +284,7 @@ class pane2window:
             
             
             scores=font1.render(str(score),1,(0,0,0)) 
-            gameDisplay.blit(scores,(200+650+20,30))
+            gameDisplay.blit(scores,(200+650,30))
             
             
             
