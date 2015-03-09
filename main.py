@@ -30,6 +30,8 @@ import sys
 
 from normal import *
 from nightmare import *
+from hell import *
+from cardiac import *
 
 
 
@@ -86,6 +88,8 @@ class game:
             
             maxnormal=0
             maxnightmare=0
+            maxhell=0
+            maxcardiac=0
             
             font_path = "fonts/arial.ttf"
             font_size = 18
@@ -109,6 +113,8 @@ class game:
             
             maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
             maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
+            maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
+            maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
             
         
         while not crashed:
@@ -129,7 +135,7 @@ class game:
             gameDisplay.fill(black)
             gameDisplay.blit(background,(350,0))
             
-            if pane2.get_rect(center=(390+80+120,150+50)).collidepoint(mos_x,mos_y):
+            if pane2.get_rect(center=(390+80+120,150+50)).collidepoint(mos_x,mos_y):            # 2 pane game
                 gameDisplay.blit(pygame.transform.scale(pane2,(420,90)),(385,150))
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     press=1
@@ -167,7 +173,7 @@ class game:
                 
                 
             
-            if pane3.get_rect(center=(390+60,250+50)).collidepoint(mos_x,mos_y):
+            if pane3.get_rect(center=(390+60,250+50)).collidepoint(mos_x,mos_y):                #3pane game
                 gameDisplay.blit(pygame.transform.scale(pane3,(135,95)),(385,250))
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     press=1
@@ -211,6 +217,35 @@ class game:
             
             if pane4.get_rect(center=(530+60,250+50)).collidepoint(mos_x,mos_y):
                 gameDisplay.blit(pygame.transform.scale(pane4,(135,95)),(525,250))
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    a=pane4window()
+                    a=a.run(gameDisplay,info)
+                    fh = open("score.txt", "rw")
+                    
+                    for i, line in enumerate(fh):
+                        if i == 2:
+                            maxhell = int(line)
+                    
+                    fh.close()
+                    
+                    
+                    if a>maxhell:
+                        for i, line in enumerate(fh):
+                            maxhell=fh.readline()
+                            if i == 1:
+                                fh.write(str(a))
+                    
+                        fh.close()
+                        maxhell=a
+                    
+                        
+                    maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0)) 
+                        
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0 
+                
                 
             else:
                 gameDisplay.blit(pane4,(530,250)) # 4pane
@@ -236,8 +271,38 @@ class game:
             
             
             
-            if paneheart2.get_rect(center=(390+200,450+50)).collidepoint(mos_x,mos_y):
+            if paneheart2.get_rect(center=(390+200,450+50)).collidepoint(mos_x,mos_y):              # heart collect game
                 gameDisplay.blit(pygame.transform.scale(paneheart2,(420,90)),(385,450))
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    a=pane2heartwindow()
+                    a=a.run(gameDisplay,info)
+                    fh = open("score.txt", "rw")
+                    
+                    for i, line in enumerate(fh):
+                        if i == 2:
+                            maxcardiac = int(line)
+                    
+                    fh.close()
+                    
+                    
+                    if a>maxcardiac:
+                        for i, line in enumerate(fh):
+                            maxcardiac=fh.readline()
+                            if i == 1:
+                                fh.write(str(a))
+                    
+                        fh.close()
+                        maxcardiac=a
+                    
+                        
+                    maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0)) 
+                        
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0 
+                
+                
             
             else:
                 gameDisplay.blit(paneheart2,(390,450))  # paneheart

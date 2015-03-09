@@ -7,7 +7,7 @@ from random import *
 
 
 
-        
+'''        
 pygame.init()
 sound=True
         
@@ -39,7 +39,7 @@ if not(gameDisplay):
     pygame.display.set_icon(gameicon)
             
 
-
+'''
 
 class pane2heartwindow:
     
@@ -411,5 +411,3 @@ class pane2heartwindow:
             sys.exit()
          
          
-a=pane2heartwindow()
-a.run(gameDisplay,info)
