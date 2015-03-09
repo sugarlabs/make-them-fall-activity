@@ -94,12 +94,18 @@ class game:
             
             # Score read
             fh = open("score.txt", "r")
-            maxnormal = int(fh.readline())
-            fh.close()
+            
+            for i, line in enumerate(fh):
+                if i == 1:
+                    maxnormal = int(line)
+            fh.close() 
             
             fh = open("score.txt", "r")
-            maxnightmare = int(fh.readline())
-            fh.close()
+            
+            for i, line in enumerate(fh):
+                if i == 2:
+                    maxnightmare = int(line)
+            fh.close() 
             
             maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
             maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
@@ -129,12 +135,23 @@ class game:
                     press=1
                     a=pane2window()
                     a=a.run(gameDisplay,info)
+                    
                     fh = open("score.txt", "r")
-                    maxnormal = int(fh.readline())
-                    fh.close()
+                    
+                    for i, line in enumerate(fh):
+                        if i == 1:
+                            maxnormal = int(line)
+                    fh.close()        
+                     
+                    
+                    
                     if a>maxnormal:
-                        fh = open("score.txt", "w")
-                        fh.write(str(a))
+                        fh = open("score.txt", "rw")
+                        for i, line in enumerate(fh):
+                            maxnormal=fh.readline()
+                            if i == 1:
+                                fh.write(str(a))
+                    
                         fh.close()
                         maxnormal=a
                         
@@ -156,14 +173,24 @@ class game:
                     press=1
                     a=pane3window()
                     a=a.run(gameDisplay,info)
-                    fh = open("score.txt", "r")
-                    maxnightmare = int(fh.readline())
+                    fh = open("score.txt", "rw")
+                    
+                    for i, line in enumerate(fh):
+                        if i == 2:
+                            maxnightmare = int(line)
+                    
                     fh.close()
+                    
+                    
                     if a>maxnightmare:
-                        fh = open("score.txt", "w")
-                        fh.write(str(a))
+                        for i, line in enumerate(fh):
+                            maxnightmare=fh.readline()
+                            if i == 1:
+                                fh.write(str(a))
+                    
                         fh.close()
                         maxnightmare=a
+                    
                         
                     maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0)) 
                         

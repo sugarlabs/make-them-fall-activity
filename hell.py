@@ -121,8 +121,8 @@ class pane4window:
             event=pygame.event.poll()
             #totaltime+=timer.tick()
             if event.type == pygame.QUIT:
-                totaltime+=timer.tick()
-                
+                #totaltime+=timer.tick()
+                crashed=True
             
             #print event
             

@@ -7,7 +7,41 @@ from random import *
 
 
 
-class pane2window:
+        
+pygame.init()
+sound=True
+        
+try:
+    pygame.mixer.init()
+except Exception, err:
+    sound=False
+    print 'error with sound', error
+            
+black=(0,0,0)
+white=(255,255,255)
+clock=pygame.time.Clock()
+timer=pygame.time.Clock()
+            
+crashed=False   
+disp_width = 600
+disp_height = 600
+            
+press=0    
+            
+gameDisplay=pygame.display.get_surface()
+        
+if not(gameDisplay):
+    info=pygame.display.Info()
+    gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
+            
+    pygame.display.set_caption("Make Them Fall")
+    gameicon=pygame.image.load('data/images/icon.png')
+    pygame.display.set_icon(gameicon)
+            
+
+
+
+class pane2heartwindow:
     
     def run(self,gameDisplay,info):
         
@@ -27,7 +61,10 @@ class pane2window:
         leftman=pygame.image.load("data/images/man.png")
         rightman=pygame.transform.flip(leftman,True,False)
         background=pygame.image.load("data/images/2pane.png")
-        lspike=pygame.image.load("data/images/Spike.png")
+        blackheart=pygame.image.load("data/images/blackheart.png")
+        whiteheart=pygame.image.load("data/images/whiteheart.png")
+        
+        lspike=pygame.image.load("data/images/heart.png")
         rspike=pygame.transform.flip(lspike,True,False) 
         background=pygame.transform.scale(background,(600,info.current_h))
         y_axis1=700
@@ -55,6 +92,9 @@ class pane2window:
         speed=7
         flag=1
         
+        flag1=flag2=flag3=flag4=0
+        
+        numberofhearts=0
         
         black=(0,0,0)
         white=(255,255,255)
@@ -146,18 +186,18 @@ class pane2window:
             if m1==1:
                 
                 if leftquad==leftman:
-                    leftmove+=30
+                    leftmove+=34
                 if leftquad==rightman:
-                    leftmove-=30
+                    leftmove-=34
                 time1+=1
             
             if m2==1:
                 
                 
                 if rightquad==leftman:
-                    rightmove+=30
+                    rightmove+=34
                 if rightquad==rightman:
-                    rightmove-=30
+                    rightmove-=34
                 time2+=1
                
                 
@@ -182,20 +222,20 @@ class pane2window:
             ######### SPIKE PART###########
             
             
-            if orientation1==0:                     #orientation change
+            if orientation1==0 and flag1==0:                     #orientation change
                 x_axis1=350
                 gameDisplay.blit(lspike,(x_axis1,y_axis1))
             
-            if orientation1==1:
+            if orientation1==1 and flag1==0:
                 x_axis1=589
                 gameDisplay.blit(rspike,(x_axis1,y_axis1))
                 
                 
-            if orientation2==0:
+            if orientation2==0 and flag2==0:
                 x_axis2=350
                 gameDisplay.blit(lspike,(x_axis2,y_axis2))
             
-            if orientation2==1:
+            if orientation2==1 and flag2==0:
                 x_axis2=589
                 gameDisplay.blit(rspike,(x_axis2,y_axis2))
             
@@ -203,20 +243,20 @@ class pane2window:
             
             
             # right side spikes
-            if orientation4==0:
+            if orientation4==0 and flag3==0:
                 x_axisa=659
                 gameDisplay.blit(lspike,(x_axisa,y_axisa))
             
-            if orientation4==1:
+            if orientation4==1 and flag3==0:
                 x_axisa=659+238
                 gameDisplay.blit(rspike,(x_axisa,y_axisa))
             
             
-            if orientation5==0:
+            if orientation5==0 and flag4==0:
                 x_axisb=659
                 gameDisplay.blit(lspike,(x_axisb,y_axisb))
             
-            if orientation5==1:
+            if orientation5==1 and flag4==0:
                 x_axisb=659+238
                 gameDisplay.blit(rspike,(x_axisb,y_axisb))
             
@@ -234,10 +274,10 @@ class pane2window:
             if score==25 or score==55 or score==70:
                 flag=1
             
-            if score==25 and flag==1 :
+            if score==55 and flag==1 :
                 flag=0
                 speed+=0.1
-                
+            '''    
             if score==55 and flag==1:
                 flag=0
                 speed+=0.1
@@ -245,23 +285,23 @@ class pane2window:
             if score==70 and flag==1:
                 flag=0
                 speed+=0.1
-                
+            '''    
             
             
             
-            if y_axis1<=-40 or y_axis2<=-40 or y_axisa<=-40 or y_axisb<=-40 :
-                scoremusic.play(0)
-                score+=1
+            if (y_axis1<=-40 and flag1!=1) or (y_axis2<=-40 and flag2!=1) or (y_axisa<=-40 and flag3!=1)or (y_axisb<=-40 and flag4!=1):
+                collide.play(0)
+                numberofhearts+=1
             
             if(y_axis1<-40):
                 orientation1=randint(0,1)
-                   
+                flag1=0   
                 y_axis1=700
                 
             
             if(y_axis2<-40):
                 orientation2=randint(0,1)
-                    
+                flag2=0    
                 y_axis2=700
             
               
@@ -269,13 +309,13 @@ class pane2window:
             
             if(y_axisa<-40):
                 orientation4=randint(0,1)
-                
+                flag3=0
                 y_axisa=700
                 
             
             if(y_axisb<-40):
                 orientation5=randint(0,1)
-                
+                flag4=0
                 y_axisb=700
                 
             
@@ -289,16 +329,59 @@ class pane2window:
             
             
             
+            # Heart Blit
             
-            if leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis1+8,y_axis1) \
-              or leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis2+8,y_axis2):
-                collide.play(0)
-                return score
+            if numberofhearts>=1:
+                gameDisplay.blit(blackheart,(550,20))
+                
+            else:
+                gameDisplay.blit(whiteheart,(550,20))
             
-            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisa+8,y_axisa) \
-              or rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisb+8,y_axisb):
-                collide.play(0)
-                return score
+            if numberofhearts>=2:
+                gameDisplay.blit(blackheart,(620,20))
+                
+            else:
+                gameDisplay.blit(whiteheart,(620,20))
+            
+            if numberofhearts==3:
+                gameDisplay.blit(blackheart,(690,20))
+                
+            else:
+                gameDisplay.blit(whiteheart,(690,20))
+                
+             
+            
+            
+            # Heart collection check
+            
+            if leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis1+8,y_axis1) and flag1==0:
+                scoremusic.play(0)
+                score+=1
+                #orientation2=randint(0,1)
+                flag1=1
+                
+
+            if leftquad.get_rect(center=(leftmove+5,100+10)).collidepoint(x_axis2+8,y_axis2) and flag2==0:
+                scoremusic.play(0)
+                score+=1
+                #orientation2=randint(0,1)
+                flag2=1
+                
+            
+            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisa+8,y_axisa) and flag3==0:
+                scoremusic.play(0)
+                score+=1
+                flag3=1
+                
+
+            if rightquad.get_rect(center=(rightmove+5,100+10)).collidepoint(x_axisb+8,y_axisb) and flag4==0:
+                scoremusic.play(0)
+                score+=1
+                flag4=1
+                
+                
+                #collide.play(0)
+                #return score
             
             
             
@@ -306,6 +389,9 @@ class pane2window:
             
             pygame.display.update()
             clock.tick(60)
+            
+            if numberofhearts==3:
+                return score
      
             if crashed==True:                                   # Game crash or Close check
                 pygame.quit()
@@ -323,4 +409,7 @@ class pane2window:
         if crashed==True:
             pygame.quit()
             sys.exit()
-            
+         
+         
+a=pane2heartwindow()
+a.run(gameDisplay,info)
