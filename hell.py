@@ -136,7 +136,7 @@ class pane4window:
             
             # Keypress orientation change
             
-            if event.type==pygame.KEYDOWN and event.key==276 and f1==0:
+            if event.type==pygame.KEYDOWN and event.key==97 and f1==0:
                 jump.play(0)
                 f1=1
                 m1=1        #start moving
@@ -144,13 +144,13 @@ class pane4window:
                 
                     
                     
-            if event.type==pygame.KEYDOWN and event.key==275 and f2==0:
+            if event.type==pygame.KEYDOWN and event.key==100 and f2==0:
                 jump.play(0)
                 f2=1
                 m2=1        #start moving
                 
             
-            if event.type==pygame.KEYDOWN and event.key==97 and f3==0:
+            if event.type==pygame.KEYDOWN and event.key==276 and f3==0:
                 jump.play(0)
                 f3=1
                 m3=1        #start moving
@@ -158,7 +158,7 @@ class pane4window:
                 
                     
                     
-            if event.type==pygame.KEYDOWN and event.key==100 and f4==0:
+            if event.type==pygame.KEYDOWN and event.key==275 and f4==0:
                 jump.play(0)
                 f4=1
                 m4=1  
