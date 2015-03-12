@@ -67,12 +67,12 @@ class pane4window:
         rspike=pygame.transform.flip(lspike,True,False) 
         background=pygame.transform.scale(background,(600,info.current_h/2))
         background1=pygame.transform.scale(background1,(600,info.current_h/2))
-        y_axis1=400
-        y_axis2=750
+        y_axis1=400+100
+        y_axis2=750+100
         
         
-        y_axisa=430
-        y_axisb=800
+        y_axisa=430+100
+        y_axisb=800+100
         
         
         
@@ -89,7 +89,7 @@ class pane4window:
            
         x_axis1=x_axis2=350
         x_axisa=x_axisb=659
-        speed=7
+        speed=5
         flag=1
         
         
@@ -354,14 +354,14 @@ class pane4window:
             
             y_axisa-=speed
             y_axisb-=speed
-            
+            '''
             if score==25 or score==55 or score==70:
                 flag=1
             
             if score==60 and flag==1 :
                 flag=0
                 speed+=0.1
-                
+            '''   
             
                 
             

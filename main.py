@@ -22,7 +22,7 @@
 
 
 
-
+import os
 import gtk
 import pickle
 import pygame
@@ -32,6 +32,9 @@ from normal import *
 from nightmare import *
 from hell import *
 from cardiac import *
+from impossible import *
+from inferno import *
+from scorescreen import *
 
 
 
@@ -90,31 +93,34 @@ class game:
             maxnightmare=0
             maxhell=0
             maxcardiac=0
+            maximpossible=0
+            maxinferno=0
+            f=1
+            
             
             font_path = "fonts/arial.ttf"
             font_size = 18
             font1= pygame.font.Font(font_path, font_size)
             font1.set_bold(True)
             
-            # Score read
-            fh = open("score.txt", "r")
+            if os.path.getsize("score.pkl") >0:
             
-            for i, line in enumerate(fh):
-                if i == 1:
-                    maxnormal = int(line)
-            fh.close() 
+                with open('score.pkl', 'rb') as input:    #REading
+                    maxscore = pickle.load(input)
             
-            fh = open("score.txt", "r")
-            
-            for i, line in enumerate(fh):
-                if i == 2:
-                    maxnightmare = int(line)
-            fh.close() 
+            maxnormal=maxscore[0]
+            maxnightmare=maxscore[1]
+            maxhell=maxscore[2]
+            maxinferno=maxscore[3]
+            maximpossible=maxscore[4]
+            maxcardiac=maxscore[5]
             
             maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
             maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
             maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
             maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
+            maxinferno=font1.render("Best: "+str(maxinferno),1,(0,0,0))
+            maximpossible=font1.render("Best: "+str(maximpossible),1,(0,0,0))
             
         
         while not crashed:
@@ -130,6 +136,7 @@ class game:
             
             mos_x,mos_y=pygame.mouse.get_pos() 
             
+            #print event
             
                 
             gameDisplay.fill(black)
@@ -138,30 +145,19 @@ class game:
             if pane2.get_rect(center=(390+80+120,150+50)).collidepoint(mos_x,mos_y):            # 2 pane game
                 gameDisplay.blit(pygame.transform.scale(pane2,(420,90)),(385,150))
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    #print 'yes'
                     press=1
-                    a=pane2window()
-                    a=a.run(gameDisplay,info)
-                    
-                    fh = open("score.txt", "r")
-                    
-                    for i, line in enumerate(fh):
-                        if i == 1:
-                            maxnormal = int(line)
-                    fh.close()        
-                     
-                    
-                    
-                    if a>maxnormal:
-                        fh = open("score.txt", "rw")
-                        for i, line in enumerate(fh):
-                            maxnormal=fh.readline()
-                            if i == 1:
-                                fh.write(str(a))
-                    
-                        fh.close()
-                        maxnormal=a
+                    while f==1:
                         
-                    maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
+                        a=pane2window()
+                        a=a.run(gameDisplay,info)
+                    
+                        f=scorewindow()
+                        f=f.run(gameDisplay,a,1)
+                        
+                        
+                        
+                     
                         
                     
                 if event.type==pygame.MOUSEBUTTONUP:
@@ -177,28 +173,18 @@ class game:
                 gameDisplay.blit(pygame.transform.scale(pane3,(135,95)),(385,250))
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     press=1
-                    a=pane3window()
-                    a=a.run(gameDisplay,info)
-                    fh = open("score.txt", "rw")
+                    while f==1:
+                        
+                        a=pane3window()
+                        a=a.run(gameDisplay,info)
                     
-                    for i, line in enumerate(fh):
-                        if i == 2:
-                            maxnightmare = int(line)
-                    
-                    fh.close()
+                        f=scorewindow()
+                        f=f.run(gameDisplay,a,2)
                     
                     
-                    if a>maxnightmare:
-                        for i, line in enumerate(fh):
-                            maxnightmare=fh.readline()
-                            if i == 1:
-                                fh.write(str(a))
-                    
-                        fh.close()
-                        maxnightmare=a
                     
                         
-                    maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0)) 
+                    
                         
                     
                 if event.type==pygame.MOUSEBUTTONUP:
@@ -217,30 +203,21 @@ class game:
             
             if pane4.get_rect(center=(530+60,250+50)).collidepoint(mos_x,mos_y):
                 gameDisplay.blit(pygame.transform.scale(pane4,(135,95)),(525,250))
-                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:                              #4Pane Window
+                    
+                    
+                    
                     press=1
-                    a=pane4window()
-                    a=a.run(gameDisplay,info)
-                    fh = open("score.txt", "rw")
+                    while f==1:
+                        
+                        a=pane4window()
+                        a=a.run(gameDisplay,info)
                     
-                    for i, line in enumerate(fh):
-                        if i == 2:
-                            maxhell = int(line)
-                    
-                    fh.close()
-                    
-                    
-                    if a>maxhell:
-                        for i, line in enumerate(fh):
-                            maxhell=fh.readline()
-                            if i == 1:
-                                fh.write(str(a))
-                    
-                        fh.close()
-                        maxhell=a
+                        f=scorewindow()
+                        f=f.run(gameDisplay,a,3)
                     
                         
-                    maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0)) 
+                     
                         
                     
                 if event.type==pygame.MOUSEBUTTONUP:
@@ -254,16 +231,53 @@ class game:
             
              
              
-            if pane5.get_rect(center=(670+60,250+50)).collidepoint(mos_x,mos_y):
+            if pane5.get_rect(center=(670+60,250+50)).collidepoint(mos_x,mos_y):                    #5pane Windoe
                 gameDisplay.blit(pygame.transform.scale(pane5,(135,95)),(665,250))
+                
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    while f==1:
+                        
+                        a=pane5window()
+                        a=a.run(gameDisplay,info)
+                    
+                        f=scorewindow()
+
+
+                        f=f.run(gameDisplay,a,4)
+                    
+                        
+                    
+                        
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0
              
             else: 
                 gameDisplay.blit(pane5,(670,250)) # 5pane
                 
              
             
-            if pane6.get_rect(center=(390+200,350+50)).collidepoint(mos_x,mos_y):
+            if pane6.get_rect(center=(390+200,350+50)).collidepoint(mos_x,mos_y):               # Impossible module connect
                 gameDisplay.blit(pygame.transform.scale(pane6,(420,90)),(385,350))
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    while f==1:
+                        
+                        a=pane6window()
+                        a=a.run(gameDisplay,info)
+                    
+                        f=scorewindow()
+                        f=f.run(gameDisplay,a,5)
+                    
+                        
+                     
+                        
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0
+                
+                
                 
             else:
                 gameDisplay.blit(pane6,(390,350))  # 6pane
@@ -275,28 +289,16 @@ class game:
                 gameDisplay.blit(pygame.transform.scale(paneheart2,(420,90)),(385,450))
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     press=1
-                    a=pane2heartwindow()
-                    a=a.run(gameDisplay,info)
-                    fh = open("score.txt", "rw")
+                    while f==1:
+                        
+                        a=pane2heartwindow()
+                        a=a.run(gameDisplay,info)
                     
-                    for i, line in enumerate(fh):
-                        if i == 2:
-                            maxcardiac = int(line)
-                    
-                    fh.close()
-                    
-                    
-                    if a>maxcardiac:
-                        for i, line in enumerate(fh):
-                            maxcardiac=fh.readline()
-                            if i == 1:
-                                fh.write(str(a))
-                    
-                        fh.close()
-                        maxcardiac=a
+                        f=scorewindow()
+                        f=f.run(gameDisplay,a,6)
                     
                         
-                    maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0)) 
+                     
                         
                     
                 if event.type==pygame.MOUSEBUTTONUP:
@@ -314,26 +316,58 @@ class game:
             
             if hlp.get_rect(center=(550+20,580+20)).collidepoint(mos_x,mos_y):
                 gameDisplay.blit(pygame.transform.scale(hlp,(88,88)),(548,580))
+                
+                
+                
+                
             else:
                 
                 gameDisplay.blit(hlp,(550,580))     # help
                 
             
             
+            maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0))
+            maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0)) 
+            maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
+            maxinferno=font1.render("Best: "+str(maxinferno),1,(0,0,0)) 
+            maximpossible=font1.render("Best: "+str(maximpossible),1,(0,0,0))
+            maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
+            
+            
+            
+            
             #Scores Display           
             
             
             gameDisplay.blit(maxnormal,(540,200))
-            gameDisplay.blit(maxnightmare,(400,300))
+            gameDisplay.blit(maxnightmare,(410,300))
+            gameDisplay.blit(maxhell,(560,300))
+            gameDisplay.blit(maxinferno,(700,300))
+            gameDisplay.blit(maximpossible,(560,410))
+            gameDisplay.blit(maxcardiac,(560,510))
             
+            
+            
+            
+            if os.path.getsize("score.pkl") >0:
+            
+                with open('score.pkl', 'rb') as input:    #REading
+                    maxscore = pickle.load(input)
+            
+            maxnormal=maxscore[0]
+            maxnightmare=maxscore[1]
+            maxhell=maxscore[2]
+            maxinferno=maxscore[3]
+            maximpossible=maxscore[4]
+            maxcardiac=maxscore[5]
             
                 
                 
             
             
             
-
-
+            f=1
+            #press=0
             pygame.display.update()
             clock.tick(60)
      

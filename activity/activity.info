@@ -1,0 +1,8 @@
+[Activity]
+name = Make Them Fall
+activity_version = 2
+bundle_id = org.sugarlabs.makethemfall
+icon = makethem
+exec = sugar-activity activity.Activity
+license = GPLv3
+summary = An arcade game
