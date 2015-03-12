@@ -66,11 +66,13 @@ class game:
         disp_height = 600
             
         press=0    
-            
+        
+        info=pygame.display.Info()
         gameDisplay=pygame.display.get_surface()
         
+        
         if not(gameDisplay):
-            info=pygame.display.Info()
+            
             gameDisplay = pygame.display.set_mode((info.current_w,info.current_h))
             
             pygame.display.set_caption("Make Them Fall")
@@ -78,50 +80,51 @@ class game:
             pygame.display.set_icon(gameicon)
             
             
-            
-            title=pygame.image.load("data/images/welcomescreen/title.png")
-            pane2=pygame.image.load("data/images/welcomescreen/2pane.png")
-            pane3=pygame.image.load("data/images/welcomescreen/3pane.png")
-            pane4=pygame.image.load("data/images/welcomescreen/4pane.png")
-            pane5=pygame.image.load("data/images/welcomescreen/5pane.png")
-            pane6=pygame.image.load("data/images/welcomescreen/6pane.png")
-            hlp=pygame.image.load("data/images/welcomescreen/help.png")
-            howto=pygame.image.load("data/images/welcomescreen/howtoplay.png")
-            paneheart2=pygame.image.load("data/images/welcomescreen/2paneheart.png")
-            background=pygame.image.load("data/images/welcomescreen/background.png")
-            
-            maxnormal=0
-            maxnightmare=0
-            maxhell=0
-            maxcardiac=0
-            maximpossible=0
-            maxinferno=0
-            f=1
-            
-            
-            font_path = "fonts/arial.ttf"
-            font_size = 18
-            font1= pygame.font.Font(font_path, font_size)
-            font1.set_bold(True)
-            
-            if os.path.getsize("score.pkl") >0:
-            
-                with open('score.pkl', 'rb') as input:    #REading
-                    maxscore = pickle.load(input)
-            
-            maxnormal=maxscore[0]
-            maxnightmare=maxscore[1]
-            maxhell=maxscore[2]
-            maxinferno=maxscore[3]
-            maximpossible=maxscore[4]
-            maxcardiac=maxscore[5]
-            
-            maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
-            maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
-            maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
-            maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
-            maxinferno=font1.render("Best: "+str(maxinferno),1,(0,0,0))
-            maximpossible=font1.render("Best: "+str(maximpossible),1,(0,0,0))
+        
+        title=pygame.image.load("data/images/welcomescreen/title.png")
+        pane2=pygame.image.load("data/images/welcomescreen/2pane.png")
+        pane3=pygame.image.load("data/images/welcomescreen/3pane.png")
+        pane4=pygame.image.load("data/images/welcomescreen/4pane.png")
+        pane5=pygame.image.load("data/images/welcomescreen/5pane.png")
+        pane6=pygame.image.load("data/images/welcomescreen/6pane.png")
+        hlp=pygame.image.load("data/images/welcomescreen/help.png")
+        howto=pygame.image.load("data/images/welcomescreen/howtoplay.png")
+        paneheart2=pygame.image.load("data/images/welcomescreen/2paneheart.png")
+        background=pygame.image.load("data/images/welcomescreen/background.png")
+        
+        maxnormal=0
+        maxnightmare=0
+        maxhell=0
+        maxcardiac=0
+        maximpossible=0
+        maxinferno=0
+        f=1
+        maxscore=[0,0,0,0,0,0]
+        
+        
+        font_path = "fonts/arial.ttf"
+        font_size = 18
+        font1= pygame.font.Font(font_path, font_size)
+        font1.set_bold(True)
+        
+        if os.path.getsize("score.pkl") >0:
+        
+            with open('score.pkl', 'rb') as input:    #REading
+                maxscore = pickle.load(input)
+        
+        maxnormal=maxscore[0]
+        maxnightmare=maxscore[1]
+        maxhell=maxscore[2]
+        maxinferno=maxscore[3]
+        maximpossible=maxscore[4]
+        maxcardiac=maxscore[5]
+        
+        maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
+        maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
+        maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
+        maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
+        maxinferno=font1.render("Best: "+str(maxinferno),1,(0,0,0))
+        maximpossible=font1.render("Best: "+str(maximpossible),1,(0,0,0))
             
         
         while not crashed:

@@ -1,4 +1,4 @@
-mport gtk
+import gtk
 import pickle
 import pygame
 import sys
