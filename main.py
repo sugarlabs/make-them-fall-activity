@@ -54,7 +54,7 @@ class game:
             pygame.mixer.init()
         except Exception, err:
             sound=False
-            print 'error with sound', error
+            print 'error with sound', err
             
         black=(0,0,0)
         white=(255,255,255)

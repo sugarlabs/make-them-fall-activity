@@ -1,3 +1,4 @@
+
 import os
 import gtk
 import pickle
@@ -81,6 +82,16 @@ class scorewindow:
         timer=pygame.time.Clock()   
         
         maxscore=[0,0,0,0,0,0]
+
+
+        sound = True
+        try:
+            pygame.mixer.init()
+        except Exception, err:
+            sound = False
+            print 'error with sound', err 
+
+
         
         if os.path.getsize("score.pkl") == 0:
             

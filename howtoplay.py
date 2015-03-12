@@ -1,11 +1,8 @@
-
 import gtk
 import pickle
 import pygame
 import sys
 from random import *
-
-
 
 
 
@@ -31,7 +28,12 @@ class rules:
         background=pygame.transform.scale(background,(disp_width-100,info.current_h-40))
         back=pygame.transform.scale(back,(80,50))
         
-        
+        sound = True
+        try:
+            pygame.mixer.init()
+        except Exception, err:
+            sound = False
+            print 'error with sound', err 
         
         
         
