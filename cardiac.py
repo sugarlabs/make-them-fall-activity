@@ -271,21 +271,28 @@ class pane2heartwindow:
             y_axisa-=speed
             y_axisb-=speed
             
-            if score==25 or score==45 or score==70:
+            if score==15 or score==35 or score==50 or score==75:
                 flag=1
             
-            if score==25 and flag==1 :
+            if score==15 and flag==1 :
                 flag=0
                 speed+=0.1
                 
-            if score==45 and flag==1:
+            if score==35 and flag==1:
                 flag=0
                 speed+=0.1
-            '''   
-            if score==70 and flag==1:
+             
+            if score==50 and flag==1:
                 flag=0
                 speed+=0.1
-            '''    
+                
+            if score==75 and flag==1:
+                flag=0
+                speed+=0.1
+                
+                
+                
+                
             
             
             
