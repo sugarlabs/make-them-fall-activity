@@ -35,6 +35,7 @@ from cardiac import *
 from impossible import *
 from inferno import *
 from scorescreen import *
+from howtoplay import *
 
 
 
@@ -314,8 +315,21 @@ class game:
             
             gameDisplay.blit(howto,(490,550))
             
-            if hlp.get_rect(center=(550+20,580+20)).collidepoint(mos_x,mos_y):
+            if hlp.get_rect(center=(550+20,580+20)).collidepoint(mos_x,mos_y):              #RULES
                 gameDisplay.blit(pygame.transform.scale(hlp,(88,88)),(548,580))
+                
+                if(pygame.mouse.get_pressed())[0]==1 and press==0:
+                    press=1
+                    a=rules()
+                    a=a.run(gameDisplay,info)
+                    
+                        
+                     
+                        
+                    
+                if event.type==pygame.MOUSEBUTTONUP:
+                    press=0 
+                
                 
                 
                 

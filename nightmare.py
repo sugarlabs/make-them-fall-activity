@@ -303,23 +303,23 @@ class pane3window:
             
             
             
+            '''
             
-            
-            if score==25 or score==55 or score==70:
+            if score==15 or score==45 or score==70:
                 flag=1
             
-            if score==25 and flag==1 :
+            if score==15 and flag==1 :
                 flag=0
                 speed+=0.1
-                
-            if score==55 and flag==1:
+              
+            if score==45 and flag==1:
                 flag=0
                 speed+=0.1
-                
+              
             if score==70 and flag==1:
                 flag=0
                 speed+=0.1
-                
+            '''    
             
             
             
