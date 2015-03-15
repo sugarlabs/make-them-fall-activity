@@ -26,7 +26,7 @@ class rules:
         
         
         background=pygame.transform.scale(background,(disp_width-100,info.current_h-40))
-        back=pygame.transform.scale(back,(80,50))
+        back=pygame.transform.scale(back,(70,40))
         
         sound = True
         try:
@@ -61,8 +61,8 @@ class rules:
                 
                 
                 
-            if back.get_rect(center=(750+35,20+15)).collidepoint(mos_x,mos_y):
-                gameDisplay.blit(pygame.transform.scale(back,(85,55)),(725,20))
+            if back.get_rect(center=(750+35,10+15)).collidepoint(mos_x,mos_y):
+                gameDisplay.blit(pygame.transform.scale(back,(75,45)),(725,5))
                 if(pygame.mouse.get_pressed())[0]==1 and press==0:
                     press=1
                     return 
@@ -72,7 +72,7 @@ class rules:
             
             
             else:
-                gameDisplay.blit(back,(725,20))
+                gameDisplay.blit(back,(725,5))
                 
             
             #pygame.draw.circle(gameDisplay,(255,255,255), (750+35,20+15),5,2)

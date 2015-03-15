@@ -30,7 +30,7 @@ import sys
 
 from normal import *
 from nightmare import *
-from hell import *
+from fear import *
 from cardiac import *
 from impossible import *
 from inferno import *
@@ -94,7 +94,7 @@ class game:
         
         maxnormal=0
         maxnightmare=0
-        maxhell=0
+        maxfear=0
         maxcardiac=0
         maximpossible=0
         maxinferno=0
@@ -114,7 +114,7 @@ class game:
         
         maxnormal=maxscore[0]
         maxnightmare=maxscore[1]
-        maxhell=maxscore[2]
+        maxfear=maxscore[2]
         maxinferno=maxscore[3]
         maximpossible=maxscore[4]
         maxcardiac=maxscore[5]
@@ -122,7 +122,7 @@ class game:
         maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0)) 
         maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0))
         maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
-        maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
+        maxfear=font1.render("Best: "+str(maxfear),1,(0,0,0))
         maxinferno=font1.render("Best: "+str(maxinferno),1,(0,0,0))
         maximpossible=font1.render("Best: "+str(maximpossible),1,(0,0,0))
             
@@ -345,7 +345,7 @@ class game:
             
             maxnormal=font1.render("Best: "+str(maxnormal),1,(0,0,0))
             maxnightmare=font1.render("Best: "+str(maxnightmare),1,(0,0,0)) 
-            maxhell=font1.render("Best: "+str(maxhell),1,(0,0,0))
+            maxfear=font1.render("Best: "+str(maxfear),1,(0,0,0))
             maxinferno=font1.render("Best: "+str(maxinferno),1,(0,0,0)) 
             maximpossible=font1.render("Best: "+str(maximpossible),1,(0,0,0))
             maxcardiac=font1.render("Best: "+str(maxcardiac),1,(0,0,0))
@@ -358,7 +358,7 @@ class game:
             
             gameDisplay.blit(maxnormal,(540,200))
             gameDisplay.blit(maxnightmare,(410,300))
-            gameDisplay.blit(maxhell,(560,300))
+            gameDisplay.blit(maxfear,(560,300))
             gameDisplay.blit(maxinferno,(700,300))
             gameDisplay.blit(maximpossible,(560,410))
             gameDisplay.blit(maxcardiac,(560,510))
@@ -373,7 +373,7 @@ class game:
             
             maxnormal=maxscore[0]
             maxnightmare=maxscore[1]
-            maxhell=maxscore[2]
+            maxfear=maxscore[2]
             maxinferno=maxscore[3]
             maximpossible=maxscore[4]
             maxcardiac=maxscore[5]
