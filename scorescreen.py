@@ -126,12 +126,13 @@ class scorewindow:
             while gtk.events_pending():
                 gtk.main_iteration()
             for event in pygame.event.get():
-            #totaltime+=timer.tick()
-                if event.type == pygame.QUIT:
-                    crashed=True
 
                 if event.type==pygame.KEYDOWN:
                     return 1
+                if event.type == pygame.QUIT:
+                    crashed=True
+
+                
 
 
             mos_x,mos_y=pygame.mouse.get_pos()
