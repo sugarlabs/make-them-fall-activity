@@ -132,10 +132,12 @@ class scorewindow:
                 if event.type == pygame.QUIT:
                     crashed=True
 
+
                 
 
 
             mos_x,mos_y=pygame.mouse.get_pos()
+            event = pygame.event.poll()
 
 
 
