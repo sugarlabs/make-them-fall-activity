@@ -4,43 +4,8 @@ import gtk
 import pickle
 import pygame
 import sys
-from random import *
+from random import *\
 
-'''
-pygame.init()
-sound=True
-
-try:
-    pygame.mixer.init()
-except Exception, err:
-    sound=False
-    print 'error with sound', error
-
-black=(0,0,0)
-white=(255,255,255)
-clock=pygame.time.Clock()
-timer=pygame.time.Clock()
-
-
-disp_width = 1366
-disp_height = 768
-
-
-
-
-gameDisplay=pygame.display.get_surface()
-
-
-if not(gameDisplay):
-    info=pygame.display.Info()
-    # info.current_h
-    print (info.current_w,info.current_h)
-    gameDisplay = pygame.display.set_mode((1366,768))
-
-    pygame.display.set_caption("Make Them Fall")
-    gameicon=pygame.image.load('data/images/icon.png')
-    pygame.display.set_icon(gameicon)
-'''
 
 
 class scorewindow:
