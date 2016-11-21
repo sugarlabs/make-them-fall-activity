@@ -78,8 +78,3 @@ class rules:
         if crashed == True:
             pygame.quit()
             sys.exit()
-
-'''       
-a=scorewindow()
-a.run(gameDisplay,False)
-'''

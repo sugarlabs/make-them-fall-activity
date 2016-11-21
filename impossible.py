@@ -464,7 +464,4 @@ class pane6window:
         if crashed == True:
             pygame.quit()
             sys.exit()
-'''            
-a=pane6window()
-a.run(gameDisplay,info)
-'''
+

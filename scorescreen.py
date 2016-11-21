@@ -169,10 +169,6 @@ class scorewindow:
                 gameDisplay.blit(score, (570, 210))
                 gameDisplay.blit(best, (570, 320))
 
-            '''
-            pygame.draw.circle(gameDisplay,(255,255,255), (450+140,250+200),5,2)
-            pygame.draw.circle(gameDisplay,(255,255,255), (450+140,340+200),5,2)
-            '''
 
             pygame.display.update()
             clock.tick(60)
@@ -191,7 +187,3 @@ class scorewindow:
             pygame.quit()
             sys.exit()
 
-'''
-a=scorewindow()
-a.run(gameDisplay,20,True)
-'''

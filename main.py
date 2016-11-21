@@ -112,13 +112,13 @@ class game:
         maximpossible = maxscore[4]
         maxcardiac = maxscore[5]
 
-        maxnormal = font1.render("Best: " + str(maxnormal), 1, (0, 0, 0))
-        maxnightmare = font1.render("Best: " + str(maxnightmare), 1, (0, 0, 0))
-        maxcardiac = font1.render("Best: " + str(maxcardiac), 1, (0, 0, 0))
-        maxfear = font1.render("Best: " + str(maxfear), 1, (0, 0, 0))
-        maxinferno = font1.render("Best: " + str(maxinferno), 1, (0, 0, 0))
+        maxnormal = font1.render(_("Best: ") + str(maxnormal), 1, (0, 0, 0))
+        maxnightmare = font1.render(_("Best: ") + str(maxnightmare), 1, (0, 0, 0))
+        maxcardiac = font1.render(_("Best: ") + str(maxcardiac), 1, (0, 0, 0))
+        maxfear = font1.render(_("Best: ") + str(maxfear), 1, (0, 0, 0))
+        maxinferno = font1.render(_("Best: ") + str(maxinferno), 1, (0, 0, 0))
         maximpossible = font1.render(
-            "Best: " + str(maximpossible), 1, (0, 0, 0))
+            _("Best: ") + str(maximpossible), 1, (0, 0, 0))
 
         while not crashed:
             # Gtk events

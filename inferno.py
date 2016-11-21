@@ -301,23 +301,6 @@ class pane5window:
 
             y_axisx -= speed
 
-            '''
-            if score==25 or score==55 or score==70:
-                flag=1
-            
-            if score==25 and flag==1 :
-                flag=0
-                speed+=0.1
-                
-            if score==55 and flag==1:
-                flag=0
-                speed+=0.1
-                
-            if score==70 and flag==1:
-                flag=0
-                speed+=0.1
-            '''
-
             if y_axis1 <= -40 or y_axis2 <= 380 or y_axisa <= -40 or y_axisb <= 380 or \
                y_axisx <= -40:
                 scoremusic.play(0)
