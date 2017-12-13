@@ -47,7 +47,7 @@ class pane3window:
         m1 = m2 = m3 = 0
         time1 = time2 = 0
 
-        font_path = "fonts/comicsans.ttf"
+        font_path = "fonts/arial.ttf"
         font_size = 50
         font1 = pygame.font.Font(font_path, font_size)
         score = 0
