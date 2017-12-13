@@ -26,6 +26,7 @@ import gtk
 import pickle
 import pygame
 import sys
+from gettext import gettext as _
 
 from normal import *
 from nightmare import *
