@@ -27,9 +27,10 @@ Make Them Fall depends on Python, PyGTK and PyGame.
 
 Make Them Fall is started by [Sugar](https://github.com/sugarlabs/sugar).
 
-Make Them Fall is not packaged by Ubuntu distributions.  
-On Ubuntu systems these required dependencies (`python-gtk2-dev` and
+Make Them Fall is not packaged by Debian, Ubuntu and Fedora distributions.  
+On Ubuntu and Debian systems these required dependencies (`python-gtk2-dev` and
 `python-pygame`) need to be manually installed.
+On Fedora system these dependencies (`pygtk2` and `pygame`) need to be manually installed.
 
 
 **Running outside Sugar**
@@ -37,9 +38,16 @@ On Ubuntu systems these required dependencies (`python-gtk2-dev` and
 
 - Install the dependencies - 
 
-On Ubuntu-
+On Debian and Ubuntu systems;
+
 ```
 sudo apt install python-gtk2-dev python-pygame
+```
+
+On Fedora systems;
+
+```
+sudo dnf install pygtk2 pygame
 ```
 
 - Clone the repo and run-
