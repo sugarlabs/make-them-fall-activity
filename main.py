@@ -42,15 +42,16 @@ from howtoplay import *
 
 class game:
 
+    sound = True
+
     def make(self):
 
         pygame.init()
-        sound = True
 
         try:
             pygame.mixer.init()
         except Exception, err:
-            sound = False
+            self.sound = False
             print 'error with sound', err
 
         black = (0, 0, 0)
