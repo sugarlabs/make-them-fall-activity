@@ -1,4 +1,6 @@
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 import pickle
 import pygame
 import sys
@@ -86,8 +88,8 @@ class pane6window:
         while not crashed:
             # Gtk events
 
-            while gtk.events_pending():
-                gtk.main_iteration()
+            while Gtk.events_pending():
+                Gtk.main_iteration()
             event = pygame.event.poll()
             # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
