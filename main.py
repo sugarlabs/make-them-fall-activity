@@ -104,6 +104,9 @@ class game:
         font1 = pygame.font.Font(font_path, font_size)
         font1.set_bold(True)
 
+	if os.path.exists("score.pkl")==False:
+	    open('score.pkl','w+')
+
         if os.path.getsize("score.pkl") > 0:
 
             with open('score.pkl', 'rb') as input:  # REading
