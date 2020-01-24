@@ -29,9 +29,9 @@ class rules:
         sound = True
         try:
             pygame.mixer.init()
-        except Exception, err:
+        except Exception as err:
             sound = False
-            print 'error with sound', err
+            print('error with sound', err)
 
         while not crashed:
             # Gtk events

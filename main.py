@@ -50,9 +50,9 @@ class game:
 
         try:
             pygame.mixer.init()
-        except Exception, err:
+        except Exception as err:
             self.sound = False
-            print 'error with sound', err
+            print('error with sound', err)
 
         black = (0, 0, 0)
         white = (255, 255, 255)
@@ -104,8 +104,8 @@ class game:
         font1 = pygame.font.Font(font_path, font_size)
         font1.set_bold(True)
 
-	if os.path.exists("score.pkl")==False:
-	    open('score.pkl','w+')
+        if os.path.exists("score.pkl") == False:
+            open('score.pkl', 'w+')
 
         if os.path.getsize("score.pkl") > 0:
 
@@ -120,7 +120,8 @@ class game:
         maxcardiac = maxscore[5]
 
         maxnormal = font1.render(_("Best: ") + str(maxnormal), 1, (0, 0, 0))
-        maxnightmare = font1.render(_("Best: ") + str(maxnightmare), 1, (0, 0, 0))
+        maxnightmare = font1.render(
+            _("Best: ") + str(maxnightmare), 1, (0, 0, 0))
         maxcardiac = font1.render(_("Best: ") + str(maxcardiac), 1, (0, 0, 0))
         maxfear = font1.render(_("Best: ") + str(maxfear), 1, (0, 0, 0))
         maxinferno = font1.render(_("Best: ") + str(maxinferno), 1, (0, 0, 0))
