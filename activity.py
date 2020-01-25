@@ -47,7 +47,7 @@ class Activity(activity.Activity):
         toolbar_box.toolbar.insert(separator, -1)
         separator.show()
 
-        button = ToolButton('speaker-muted-100')
+        button = ToolButton(icon_name='speaker-muted-100')
         button.set_tooltip(_('Sound'))
         button.connect('clicked', self.sound_control)
         toolbar_box.toolbar.insert(button, -1)
@@ -68,9 +68,9 @@ class Activity(activity.Activity):
         self.sound = not self.sound
         self.game.sound = self.sound
         if not self.sound:
-            button.set_icon('speaker-muted-000')
+            button.set_icon_name('speaker-muted-000')
             button.set_tooltip(_('No sound'))
         else:
-            button.set_icon('speaker-muted-100')
+            button.set_icon_name('speaker-muted-100')
             button.set_tooltip(_('Sound'))
 
