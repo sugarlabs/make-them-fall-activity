@@ -35,9 +35,9 @@ class pane6window:
         rspike = pygame.transform.flip(lspike, True, False)
 
         background = pygame.transform.scale(
-            background, (600, info.current_h / 2))
+            background, (600, info.current_h // 2))
         background1 = pygame.transform.scale(
-            background1, (600, info.current_h / 2))
+            background1, (600, info.current_h // 2))
 
         y_axis1 = 700
         y_axis2 = 800
