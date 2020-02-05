@@ -48,12 +48,6 @@ class game:
 
         pygame.init()
 
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            self.sound = False
-            print('error with sound', err)
-
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()

@@ -27,12 +27,7 @@ class rules:
         back = pygame.transform.scale(back, (70, 40))
 
         sound = True
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            sound = False
-            print('error with sound', err)
-
+        
         while not crashed:
             # Gtk events
 

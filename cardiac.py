@@ -65,11 +65,6 @@ class pane2heartwindow:
         timer = pygame.time.Clock()
 
         sound = True
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            sound = False
-            print('error with sound', err)
 
         jump = pygame.mixer.Sound("data/sound/jump.wav")
         scoremusic = pygame.mixer.Sound("data/sound/score.wav")

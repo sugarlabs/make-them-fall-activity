@@ -47,12 +47,7 @@ class scorewindow:
         maxscore = [0, 0, 0, 0, 0, 0]
 
         sound = True
-        try:
-            pygame.mixer.init()
-        except Exception as err:
-            sound = False
-            print('error with sound', err)
-
+        
         if os.path.getsize("score.pkl") == 0:
 
             with open('score.pkl', 'wb') as output:
