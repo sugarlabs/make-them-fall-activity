@@ -46,14 +46,12 @@ class game:
 
     def make(self):
 
-        pygame.init()
-
+        self.crashed = False
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()
         timer = pygame.time.Clock()
 
-        crashed = False
         disp_width = 600
         disp_height = 600
 
@@ -122,15 +120,16 @@ class game:
         maximpossible = font1.render(
             _("Best: ") + str(maximpossible), 1, (0, 0, 0))
 
-        while not crashed:
+        while not self.crashed:
             # Gtk events
 
             while Gtk.events_pending():
                 Gtk.main_iteration()
+
             event = pygame.event.poll()
             # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
-                crashed = True
+                return
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -313,21 +312,7 @@ class game:
             # press=0
             pygame.display.update()
             clock.tick(60)
-
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()
-
+            
 
 if __name__ == "__main__":
     g = game()
