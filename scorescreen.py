@@ -8,6 +8,7 @@ import pygame
 import sys
 from random import *\
 
+from sugar3.activity.activity import get_activity_root 
 
 
 class scorewindow:
@@ -47,20 +48,22 @@ class scorewindow:
         maxscore = [0, 0, 0, 0, 0, 0]
 
         sound = True
-        
-        if os.path.getsize("score.pkl") == 0:
 
-            with open('score.pkl', 'wb') as output:
+        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+        
+        if os.path.getsize(score_path) == 0:
+
+            with open(score_path, 'wb') as output:
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
 
-        with open('score.pkl', 'rb') as input:  # REading
+        with open(score_path, 'rb') as input:  # REading
             maxscore = pickle.load(input)
 
         if score > maxscore[gamenumber - 1]:
             best = score
             ifbest = True
             maxscore[gamenumber - 1] = score
-            with open('score.pkl', 'wb') as output:  # Writiing if max
+            with open(score_path, 'wb') as output:  # Writiing if max
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
 
         else:

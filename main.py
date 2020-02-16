@@ -30,6 +30,8 @@ import pygame
 import sys
 from gettext import gettext as _
 
+from sugar3.activity.activity import get_activity_root 
+
 from normal import *
 from nightmare import *
 from fear import *
@@ -96,12 +98,13 @@ class game:
         font1 = pygame.font.Font(font_path, font_size)
         font1.set_bold(True)
 
-        if os.path.exists("score.pkl") == False:
-            open('score.pkl', 'w+')
+        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+        if not os.path.exists(score_path):
+            open(score_path,'w+')
 
-        if os.path.getsize("score.pkl") > 0:
+        if os.path.getsize(score_path) > 0:
 
-            with open('score.pkl', 'rb') as input:  # REading
+            with open(score_path, 'rb') as input:  # REading
                 maxscore = pickle.load(input)
 
         maxnormal = maxscore[0]
@@ -296,9 +299,9 @@ class game:
             gameDisplay.blit(maximpossible, (560, 410))
             gameDisplay.blit(maxcardiac, (560, 510))
 
-            if os.path.getsize("score.pkl") > 0:
+            if os.path.getsize(score_path) > 0:
 
-                with open('score.pkl', 'rb') as input:  # REading
+                with open(score_path, 'rb') as input:  # REading
                     maxscore = pickle.load(input)
 
             maxnormal = maxscore[0]
