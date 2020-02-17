@@ -128,6 +128,8 @@ class game:
 
             while Gtk.events_pending():
                 Gtk.main_iteration()
+            if self.crashed:
+                break
 
             event = pygame.event.poll()
             # totaltime+=timer.tick()
