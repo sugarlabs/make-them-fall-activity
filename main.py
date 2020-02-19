@@ -46,7 +46,7 @@ class game:
 
     sound = True
 
-    def make(self):
+    def run(self):
 
         self.crashed = False
         black = (0, 0, 0)
@@ -321,4 +321,4 @@ class game:
 
 if __name__ == "__main__":
     g = game()
-    g.make()
+    g.run()

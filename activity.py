@@ -25,7 +25,7 @@ class Activity(activity.Activity):
         self.game = main.game()
         self.game.canvas = sugargame.canvas.PygameCanvas(
                 self,
-                main=self.game.make,
+                main=self.game.run,
                 modules=[pygame.display, pygame.font, pygame.mixer])
         self.set_canvas(self.game.canvas)
         self.game.canvas.grab_focus()
@@ -47,7 +47,7 @@ class Activity(activity.Activity):
         toolbar_box.toolbar.insert(separator, -1)
         separator.show()
 
-        button = ToolButton(icon_name='speaker-muted-100')
+        button = ToolButton('speaker-muted-100')
         button.set_tooltip(_('Sound'))
         button.connect('clicked', self.sound_control)
         toolbar_box.toolbar.insert(button, -1)
@@ -77,5 +77,3 @@ class Activity(activity.Activity):
 
     def _stop_cb(self, button):
         self.game.crashed = True
-
-
