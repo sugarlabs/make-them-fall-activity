@@ -77,3 +77,5 @@ class Activity(activity.Activity):
 
     def _stop_cb(self, button):
         self.game.crashed = True
+        if self.game.running_mode:
+            self.game.running_mode.crashed = True

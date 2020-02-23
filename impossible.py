@@ -11,7 +11,6 @@ class pane6window:
 
     def run(self, gameDisplay, info):
 
-        crashed = False
         orientation1 = 0
         orientation2 = 0
         orientation3 = 0
@@ -80,7 +79,7 @@ class pane6window:
         scoremusic = pygame.mixer.Sound("data/sound/score.wav")
         collide = pygame.mixer.Sound("data/sound/fall.wav")
 
-        while not crashed:
+        while not self.crashed:
             # Gtk events
 
             while Gtk.events_pending():
@@ -88,8 +87,7 @@ class pane6window:
             event = pygame.event.poll()
             # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
-                # totaltime+=timer.tick()
-                crashed = True
+                return
             # print event
 
             gameDisplay.fill(black)
@@ -447,18 +445,3 @@ class pane6window:
 
             pygame.display.update()
             clock.tick(60)
-
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()
-

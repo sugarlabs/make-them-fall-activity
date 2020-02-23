@@ -14,7 +14,6 @@ class rules:
         disp_width = 600
 
         press = 0
-        crashed = False
         black = (0, 0, 0)
         clock = pygame.time.Clock()
         timer = pygame.time.Clock()
@@ -28,7 +27,7 @@ class rules:
 
         sound = True
         
-        while not crashed:
+        while not self.crashed:
             # Gtk events
 
             while Gtk.events_pending():
@@ -36,8 +35,7 @@ class rules:
             event = pygame.event.poll()
             # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
-                # totaltime+=timer.tick()
-                crashed = True
+                return
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -61,17 +59,3 @@ class rules:
 
             pygame.display.update()
             clock.tick(60)
-
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()

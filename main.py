@@ -49,6 +49,7 @@ class game:
     def run(self):
 
         self.crashed = False
+        self.running_mode = None
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()
@@ -153,9 +154,13 @@ class game:
                     while f == 1:
 
                         a = pane2window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 1)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -172,9 +177,13 @@ class game:
                     while f == 1:
 
                         a = pane3window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 2)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -193,9 +202,13 @@ class game:
                     while f == 1:
 
                         a = pane4window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 3)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -213,10 +226,13 @@ class game:
                     while f == 1:
 
                         a = pane5window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
-
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 4)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -234,9 +250,13 @@ class game:
                     while f == 1:
 
                         a = pane6window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 5)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -254,9 +274,13 @@ class game:
                     while f == 1:
 
                         a = pane2heartwindow()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 6)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -274,6 +298,8 @@ class game:
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
                     press = 1
                     a = rules()
+                    self.running_mode = a
+                    self.running_mode.crashed = self.crashed
                     a = a.run(gameDisplay, info)
 
                 if event.type == pygame.MOUSEBUTTONUP:
