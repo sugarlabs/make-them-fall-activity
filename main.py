@@ -30,6 +30,8 @@ import pygame
 import sys
 from gettext import gettext as _
 
+from sugar3.activity.activity import get_activity_root 
+
 from normal import *
 from nightmare import *
 from fear import *
@@ -44,22 +46,15 @@ class game:
 
     sound = True
 
-    def make(self):
+    def run(self):
 
-        pygame.init()
-
-        try:
-            pygame.mixer.init()
-        except Exception, err:
-            self.sound = False
-            print 'error with sound', err
-
+        self.crashed = False
+        self.running_mode = None
         black = (0, 0, 0)
         white = (255, 255, 255)
         clock = pygame.time.Clock()
         timer = pygame.time.Clock()
 
-        crashed = False
         disp_width = 600
         disp_height = 600
 
@@ -104,12 +99,13 @@ class game:
         font1 = pygame.font.Font(font_path, font_size)
         font1.set_bold(True)
 
-	if os.path.exists("score.pkl")==False:
-	    open('score.pkl','w+')
+        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+        if not os.path.exists(score_path):
+            open(score_path,'w+')
 
-        if os.path.getsize("score.pkl") > 0:
+        if os.path.getsize(score_path) > 0:
 
-            with open('score.pkl', 'rb') as input:  # REading
+            with open(score_path, 'rb') as input:  # REading
                 maxscore = pickle.load(input)
 
         maxnormal = maxscore[0]
@@ -120,22 +116,26 @@ class game:
         maxcardiac = maxscore[5]
 
         maxnormal = font1.render(_("Best: ") + str(maxnormal), 1, (0, 0, 0))
-        maxnightmare = font1.render(_("Best: ") + str(maxnightmare), 1, (0, 0, 0))
+        maxnightmare = font1.render(
+            _("Best: ") + str(maxnightmare), 1, (0, 0, 0))
         maxcardiac = font1.render(_("Best: ") + str(maxcardiac), 1, (0, 0, 0))
         maxfear = font1.render(_("Best: ") + str(maxfear), 1, (0, 0, 0))
         maxinferno = font1.render(_("Best: ") + str(maxinferno), 1, (0, 0, 0))
         maximpossible = font1.render(
             _("Best: ") + str(maximpossible), 1, (0, 0, 0))
 
-        while not crashed:
+        while not self.crashed:
             # Gtk events
 
             while Gtk.events_pending():
                 Gtk.main_iteration()
+            if self.crashed:
+                break
+
             event = pygame.event.poll()
             # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
-                crashed = True
+                return
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -154,9 +154,13 @@ class game:
                     while f == 1:
 
                         a = pane2window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 1)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -173,9 +177,13 @@ class game:
                     while f == 1:
 
                         a = pane3window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 2)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -194,9 +202,13 @@ class game:
                     while f == 1:
 
                         a = pane4window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 3)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -214,10 +226,13 @@ class game:
                     while f == 1:
 
                         a = pane5window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
-
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 4)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -235,9 +250,13 @@ class game:
                     while f == 1:
 
                         a = pane6window()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 5)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -255,9 +274,13 @@ class game:
                     while f == 1:
 
                         a = pane2heartwindow()
+                        self.running_mode = a
+                        self.running_mode.crashed = self.crashed
                         a = a.run(gameDisplay, info)
 
                         f = scorewindow()
+                        self.running_mode = f
+                        self.running_mode.crashed = self.crashed
                         f = f.run(gameDisplay, a, 6)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -275,6 +298,8 @@ class game:
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
                     press = 1
                     a = rules()
+                    self.running_mode = a
+                    self.running_mode.crashed = self.crashed
                     a = a.run(gameDisplay, info)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -302,9 +327,9 @@ class game:
             gameDisplay.blit(maximpossible, (560, 410))
             gameDisplay.blit(maxcardiac, (560, 510))
 
-            if os.path.getsize("score.pkl") > 0:
+            if os.path.getsize(score_path) > 0:
 
-                with open('score.pkl', 'rb') as input:  # REading
+                with open(score_path, 'rb') as input:  # REading
                     maxscore = pickle.load(input)
 
             maxnormal = maxscore[0]
@@ -318,22 +343,8 @@ class game:
             # press=0
             pygame.display.update()
             clock.tick(60)
-
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()
-
+            
 
 if __name__ == "__main__":
     g = game()
-    g.make()
+    g.run()

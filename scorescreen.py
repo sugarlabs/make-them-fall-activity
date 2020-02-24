@@ -8,12 +8,14 @@ import pygame
 import sys
 from random import *\
 
+from sugar3.activity.activity import get_activity_root 
 
 
 class scorewindow:
 
     def run(self, gameDisplay, score, gamenumber):
-
+        if self.crashed:
+            return
         background = pygame.image.load(
             "data/images/scorescreen/whitebackground.png")
         gameover = pygame.image.load("data/images/scorescreen/gameover.png")
@@ -35,7 +37,6 @@ class scorewindow:
         font2 = pygame.font.Font(font_path, font_size_large)
         font2.set_bold(True)
 
-        crashed = False
         press = 0
         black = (0, 0, 0)
         white = (255, 255, 255)
@@ -47,25 +48,22 @@ class scorewindow:
         maxscore = [0, 0, 0, 0, 0, 0]
 
         sound = True
-        try:
-            pygame.mixer.init()
-        except Exception, err:
-            sound = False
-            print 'error with sound', err
 
-        if os.path.getsize("score.pkl") == 0:
+        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+        
+        if os.path.getsize(score_path) == 0:
 
-            with open('score.pkl', 'wb') as output:
+            with open(score_path, 'wb') as output:
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
 
-        with open('score.pkl', 'rb') as input:  # REading
+        with open(score_path, 'rb') as input:  # REading
             maxscore = pickle.load(input)
 
         if score > maxscore[gamenumber - 1]:
             best = score
             ifbest = True
             maxscore[gamenumber - 1] = score
-            with open('score.pkl', 'wb') as output:  # Writiing if max
+            with open(score_path, 'wb') as output:  # Writiing if max
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
 
         else:
@@ -76,20 +74,18 @@ class scorewindow:
         score = font2.render(str(score), 1, (255, 255, 255))
         best = font2.render(str(best), 1, white)
 
-        while not crashed:
+        while not self.crashed:
             # Gtk events
-
             while Gtk.events_pending():
                 Gtk.main_iteration()
-            for event in pygame.event.get():
+            event = pygame.event.poll()
 
-                if event.type == pygame.KEYDOWN:
-                    return 1
-                if event.type == pygame.QUIT:
-                    crashed = True
+            if event.type == pygame.KEYDOWN:
+                return 1
+            if event.type == pygame.QUIT:
+                return
 
             mos_x, mos_y = pygame.mouse.get_pos()
-            event = pygame.event.poll()
 
             if ifbest == True:
 
@@ -174,18 +170,3 @@ class scorewindow:
 
             pygame.display.update()
             clock.tick(60)
-
-            if crashed == True:                                   # Game crash or Close check
-                pygame.quit()
-                sys.exit()
-
-        # Just a window exception check condition
-
-        event1 = pygame.event.get()
-        if event1.type == pygame.QUIT:
-            crashed = True
-
-        if crashed == True:
-            pygame.quit()
-            sys.exit()
-
