@@ -30,6 +30,7 @@ class Activity(activity.Activity):
         self.set_canvas(self.game.canvas)
         self.game.canvas.grab_focus()
         self.build_toolbar()
+        self.game.start()
 
     def build_toolbar(self):
 
