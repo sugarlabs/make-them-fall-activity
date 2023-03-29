@@ -9,20 +9,19 @@ import sys
 from random import *\
 
 from sugar3.activity.activity import get_activity_root 
+from button import Button
 
+black = (0, 0, 0)
+white = (255, 255, 255)
 
 class scorewindow:
 
-    def run(self, gameDisplay, score, gamenumber):
-        if self.crashed:
-            return
+    def __init__(self, gameDisplay, score, gamenumber):
         background = pygame.image.load(
             "data/images/scorescreen/whitebackground.png")
         gameover = pygame.image.load("data/images/scorescreen/gameover.png")
         newbestscore = pygame.image.load(
             "data/images/scorescreen/newbestscore.png")
-        tryagain = pygame.image.load("data/images/scorescreen/tryagain.png")
-        backhome = pygame.image.load("data/images/scorescreen/back.png")
         scoreboard = pygame.image.load(
             "data/images/scorescreen/scoreboard.png")
 
@@ -37,13 +36,10 @@ class scorewindow:
         font2 = pygame.font.Font(font_path, font_size_large)
         font2.set_bold(True)
 
-        press = 0
-        black = (0, 0, 0)
-        white = (255, 255, 255)
-
+        self.tryagain = False
+        self.backhome = False
+        
         ifbest = False
-        clock = pygame.time.Clock()
-        timer = pygame.time.Clock()
 
         maxscore = [0, 0, 0, 0, 0, 0]
 
@@ -51,13 +47,14 @@ class scorewindow:
 
         score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
         
-        if os.path.getsize(score_path) == 0:
+        
+        if not os.path.exists(score_path):
+            open(score_path,'w+')
 
-            with open(score_path, 'wb') as output:
-                pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
+        if os.path.getsize(score_path) > 0:
 
-        with open(score_path, 'rb') as input:  # REading
-            maxscore = pickle.load(input)
+            with open(score_path, 'rb') as inp:  # Reading
+                maxscore = pickle.load(inp)
 
         if score > maxscore[gamenumber - 1]:
             best = score
@@ -65,16 +62,52 @@ class scorewindow:
             maxscore[gamenumber - 1] = score
             with open(score_path, 'wb') as output:  # Writiing if max
                 pickle.dump(maxscore, output, pickle.HIGHEST_PROTOCOL)
-
         else:
             best = maxscore[gamenumber - 1]
-            # print best
-
-        # print best
+                        
         score = font2.render(str(score), 1, (255, 255, 255))
         best = font2.render(str(best), 1, white)
 
+        
+        gameDisplay.fill(black)
+        gameDisplay.blit(background, (0 + 350, 0))
+        gameDisplay.blit(gameover, (350 + 60, 50 + 30))
+        
+        self.buttons = []
+
+        if ifbest == True:
+            gameDisplay.blit(newbestscore, (450, 160))
+            gameDisplay.blit(best, (560, 190))
+            self.buttons.append(Button(450, 250, "data/images/scorescreen/tryagain.png", self._try_again_cb))
+            self.buttons.append(Button(450, 340, "data/images/scorescreen/back.png", self._back_home_cb))
+        else:
+            gameDisplay.blit(scoreboard, (450 + 5, 160))
+            gameDisplay.blit(score, (570, 210))
+            gameDisplay.blit(best, (560, 320))
+            self.buttons.append(Button(450, 250 + 150, "data/images/scorescreen/tryagain.png", self._try_again_cb))
+            self.buttons.append(Button(450, 340 + 150, "data/images/scorescreen/back.png", self._back_home_cb))
+        
+        self.crashed = False
+
+    def _try_again_cb(self):
+        self.tryagain = True
+
+    def _back_home_cb(self):
+        self.backhome = True
+
+    def run(self):
+        if self.crashed:
+            return
+
+        clock = pygame.time.Clock()
+        timer = pygame.time.Clock()
+
         while not self.crashed:
+            if self.tryagain:
+                return 1
+            if self.backhome:
+                return 0
+            
             # Gtk events
             while Gtk.events_pending():
                 Gtk.main_iteration()
@@ -85,88 +118,8 @@ class scorewindow:
             if event.type == pygame.QUIT:
                 return
 
-            mos_x, mos_y = pygame.mouse.get_pos()
-
-            if ifbest == True:
-
-                gameDisplay.fill(black)
-                gameDisplay.blit(background, (0 + 350, 0))
-                gameDisplay.blit(gameover, (350 + 60, 50 + 30))
-
-                gameDisplay.blit(newbestscore, (450, 160))
-
-                # tryagain
-                if tryagain.get_rect(center=(450 + 80, 250 + 10)).collidepoint(mos_x, mos_y):
-                    gameDisplay.blit(pygame.transform.scale(
-                        tryagain, (293, 84)), (448, 250))
-                    if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                        press = 1
-                        return 1
-
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        press = 0
-
-                else:
-
-                    gameDisplay.blit(tryagain, (450, 250))
-
-                # back home
-                if backhome.get_rect(center=(450 + 80, 340 + 10)).collidepoint(mos_x, mos_y):
-                    gameDisplay.blit(pygame.transform.scale(
-                        backhome, (291, 84)), (448, 340))
-                    if (pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                        press = 1
-                        return 0
-
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        press = 0
-
-                else:
-
-                    gameDisplay.blit(backhome, (450, 340))
-
-                gameDisplay.blit(best, (560, 190))
-
-            else:
-
-                gameDisplay.fill(black)
-                gameDisplay.blit(background, (0 + 350, 0))
-                gameDisplay.blit(gameover, (350 + 80, 50))
-                gameDisplay.blit(scoreboard, (450 + 5, 160))
-
-                # try again
-                if tryagain.get_rect(center=(450 + 80 + 5, 250 + 10 + 150)).collidepoint(mos_x, mos_y):
-                    gameDisplay.blit(pygame.transform.scale(
-                        tryagain, (293, 84)), (448 + 5, 250 + 150))
-                    if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                        press = 1
-                        return 1
-
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        press = 0
-
-                else:
-
-                    gameDisplay.blit(tryagain, (450 + 5, 250 + 150))
-
-                # backhome
-                if backhome.get_rect(center=(450 + 80 + 5, 340 + 10 + 150)).collidepoint(mos_x, mos_y):
-                    gameDisplay.blit(pygame.transform.scale(
-                        backhome, (291, 84)), (448 + 5, 340 + 150))
-                    if (pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                        press = 1
-                        return 0
-
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        press = 0
-
-                else:
-
-                    gameDisplay.blit(backhome, (450 + 5, 340 + 150))
-
-                gameDisplay.blit(score, (570, 210))
-                gameDisplay.blit(best, (570, 320))
-
+            for btn in self.buttons:
+                btn.update()
 
             pygame.display.update()
             clock.tick(60)
