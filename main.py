@@ -40,311 +40,135 @@ from impossible import *
 from inferno import *
 from scorescreen import *
 from howtoplay import *
+from button import Button
 
+disp_width = 600
+disp_height = 600
+
+score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+
+black = (0, 0, 0)
+white = (255, 255, 255)
 
 class game:
 
     sound = True
 
-    def run(self):
-
+    def __init__(self):
         self.crashed = False
         self.running_mode = None
-        black = (0, 0, 0)
-        white = (255, 255, 255)
-        clock = pygame.time.Clock()
+        self.clock = pygame.time.Clock()
         timer = pygame.time.Clock()
 
-        disp_width = 600
-        disp_height = 600
+        self.gameDisplay = None
+        self.info = None
 
-        press = 0
+        self.buttons = []
 
-        info = pygame.display.Info()
-        gameDisplay = pygame.display.get_surface()
+        self.maxscore = [0, 0, 0, 0, 0, 0]
+    
+    def run_game(self, window, gamenumber):
+        self.running_mode = window()
+        self.running_mode.crashed = self.crashed
+        s = self.running_mode.run(self.gameDisplay, self.info)
 
-        if not(gameDisplay):
+        if scorewindow(self.gameDisplay, s, gamenumber).run():
+            self.run_game(window, gamenumber)
+        
+        self.start()
 
-            gameDisplay = pygame.display.set_mode(
-                (info.current_w, info.current_h))
+    def show_help(self):
+        a = rules()
+        self.running_mode = a
+        self.running_mode.crashed = self.crashed
+        a = a.run(self.gameDisplay, self.info)
+
+        self.start()
+
+    def update_highscore(self):
+        if os.path.getsize(score_path) > 0:
+            with open(score_path, 'rb') as inp:  # Reading
+                self.maxscore = pickle.load(inp)
+
+    def start(self):
+
+        self.gameDisplay = pygame.display.get_surface()
+        
+        self.info = pygame.display.Info()
+
+        if not(self.gameDisplay):
+
+            self.gameDisplay = pygame.display.set_mode(
+                (self.info.current_w, self.info.current_h))
 
             pygame.display.set_caption("Make Them Fall")
             gameicon = pygame.image.load('data/images/icon.png')
             pygame.display.set_icon(gameicon)
 
-        title = pygame.image.load("data/images/welcomescreen/title.png")
-        pane2 = pygame.image.load("data/images/welcomescreen/2pane.png")
-        pane3 = pygame.image.load("data/images/welcomescreen/3pane.png")
-        pane4 = pygame.image.load("data/images/welcomescreen/4pane.png")
-        pane5 = pygame.image.load("data/images/welcomescreen/5pane.png")
-        pane6 = pygame.image.load("data/images/welcomescreen/6pane.png")
-        hlp = pygame.image.load("data/images/welcomescreen/help.png")
-        howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
-        paneheart2 = pygame.image.load(
-            "data/images/welcomescreen/2paneheart.png")
+        self.gameDisplay.fill(black)
+
         background = pygame.image.load(
             "data/images/welcomescreen/background.png")
-
-        maxnormal = 0
-        maxnightmare = 0
-        maxfear = 0
-        maxcardiac = 0
-        maximpossible = 0
-        maxinferno = 0
-        f = 1
-        maxscore = [0, 0, 0, 0, 0, 0]
+        self.gameDisplay.blit(background, (350, 0))
 
         font_path = "fonts/arial.ttf"
         font_size = 18
         font1 = pygame.font.Font(font_path, font_size)
         font1.set_bold(True)
 
-        score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
         if not os.path.exists(score_path):
             open(score_path,'w+')
 
         if os.path.getsize(score_path) > 0:
 
-            with open(score_path, 'rb') as input:  # REading
-                maxscore = pickle.load(input)
+            with open(score_path, 'rb') as inp:  # Reading
+                self.maxscore = pickle.load(inp)
 
-        maxnormal = maxscore[0]
-        maxnightmare = maxscore[1]
-        maxfear = maxscore[2]
-        maxinferno = maxscore[3]
-        maximpossible = maxscore[4]
-        maxcardiac = maxscore[5]
-
-        maxnormal = font1.render(_("Best: ") + str(maxnormal), 1, (0, 0, 0))
+        maxnormal = font1.render("Best: " + str(self.maxscore[0]), True, black)
         maxnightmare = font1.render(
-            _("Best: ") + str(maxnightmare), 1, (0, 0, 0))
-        maxcardiac = font1.render(_("Best: ") + str(maxcardiac), 1, (0, 0, 0))
-        maxfear = font1.render(_("Best: ") + str(maxfear), 1, (0, 0, 0))
-        maxinferno = font1.render(_("Best: ") + str(maxinferno), 1, (0, 0, 0))
+            "Best: " + str(self.maxscore[1]), True, black)
+        maxfear = font1.render("Best: " + str(self.maxscore[2]), True, black)
+        maxinferno = font1.render("Best: " + str(self.maxscore[3]), True, black)
         maximpossible = font1.render(
-            _("Best: ") + str(maximpossible), 1, (0, 0, 0))
+            "Best: " + str(self.maxscore[4]), True, black)
+        maxcardiac = font1.render("Best: " + str(self.maxscore[5]), True, black)
+
+        self.buttons.append(Button(390, 150, "data/images/welcomescreen/2pane.png", lambda : self.run_game(pane2window, 1), maxnormal))
+        self.buttons.append(Button(390, 250, "data/images/welcomescreen/3pane.png", lambda : self.run_game(pane3window, 2), maxnightmare))
+        self.buttons.append(Button(530, 250, "data/images/welcomescreen/4pane.png", lambda : self.run_game(pane4window, 3), maxfear))
+        self.buttons.append(Button(670, 250, "data/images/welcomescreen/5pane.png", lambda : self.run_game(pane5window, 4), maxinferno))
+        self.buttons.append(Button(390, 350, "data/images/welcomescreen/6pane.png", lambda : self.run_game(pane6window, 5), maximpossible))
+        self.buttons.append(Button(390, 450, "data/images/welcomescreen/2paneheart.png", lambda : self.run_game(pane2heartwindow, 6), maxcardiac))
+        
+        hlp = pygame.image.load("data/images/welcomescreen/help.png")
+        howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
+        
+        self.gameDisplay.blit(howto, (490, 550))
+
+        self.buttons.append(Button(550, 580, "data/images/welcomescreen/help.png", self.show_help))
+    
+    def run(self):
+        self.gameDisplay = pygame.display.get_surface()
 
         while not self.crashed:
             # Gtk events
-
             while Gtk.events_pending():
                 Gtk.main_iteration()
             if self.crashed:
                 break
 
             event = pygame.event.poll()
-            # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
                 return
 
-            mos_x, mos_y = pygame.mouse.get_pos()
+            for btn in self.buttons:
+                btn.update()
 
-            # print event
-
-            gameDisplay.fill(black)
-            gameDisplay.blit(background, (350, 0))
-
-            # 2 pane game
-            if pane2.get_rect(center=(390 + 80 + 120, 150 + 50)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    pane2, (420, 90)), (385, 150))
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                    # print 'yes'
-                    press = 1
-                    while f == 1:
-
-                        a = pane2window()
-                        self.running_mode = a
-                        self.running_mode.crashed = self.crashed
-                        a = a.run(gameDisplay, info)
-
-                        f = scorewindow()
-                        self.running_mode = f
-                        self.running_mode.crashed = self.crashed
-                        f = f.run(gameDisplay, a, 1)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-                gameDisplay.blit(pane2, (390, 150))  # 2pane
-
-            if pane3.get_rect(center=(390 + 60, 250 + 50)).collidepoint(mos_x, mos_y):  # 3pane game
-                gameDisplay.blit(pygame.transform.scale(
-                    pane3, (135, 95)), (385, 250))
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                    press = 1
-                    while f == 1:
-
-                        a = pane3window()
-                        self.running_mode = a
-                        self.running_mode.crashed = self.crashed
-                        a = a.run(gameDisplay, info)
-
-                        f = scorewindow()
-                        self.running_mode = f
-                        self.running_mode.crashed = self.crashed
-                        f = f.run(gameDisplay, a, 2)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-                gameDisplay.blit(pane3, (390, 250))  # 3pane
-
-            if pane4.get_rect(center=(530 + 60, 250 + 50)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    pane4, (135, 95)), (525, 250))
-                # 4Pane Window
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-
-                    press = 1
-                    while f == 1:
-
-                        a = pane4window()
-                        self.running_mode = a
-                        self.running_mode.crashed = self.crashed
-                        a = a.run(gameDisplay, info)
-
-                        f = scorewindow()
-                        self.running_mode = f
-                        self.running_mode.crashed = self.crashed
-                        f = f.run(gameDisplay, a, 3)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-                gameDisplay.blit(pane4, (530, 250))  # 4pane
-
-            if pane5.get_rect(center=(670 + 60, 250 + 50)).collidepoint(mos_x, mos_y):  # 5pane Windoe
-                gameDisplay.blit(pygame.transform.scale(
-                    pane5, (135, 95)), (665, 250))
-
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                    press = 1
-                    while f == 1:
-
-                        a = pane5window()
-                        self.running_mode = a
-                        self.running_mode.crashed = self.crashed
-                        a = a.run(gameDisplay, info)
-
-                        f = scorewindow()
-                        self.running_mode = f
-                        self.running_mode.crashed = self.crashed
-                        f = f.run(gameDisplay, a, 4)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-                gameDisplay.blit(pane5, (670, 250))  # 5pane
-
-            # Impossible module connect
-            if pane6.get_rect(center=(390 + 200, 350 + 50)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    pane6, (420, 90)), (385, 350))
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                    press = 1
-                    while f == 1:
-
-                        a = pane6window()
-                        self.running_mode = a
-                        self.running_mode.crashed = self.crashed
-                        a = a.run(gameDisplay, info)
-
-                        f = scorewindow()
-                        self.running_mode = f
-                        self.running_mode.crashed = self.crashed
-                        f = f.run(gameDisplay, a, 5)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-                gameDisplay.blit(pane6, (390, 350))  # 6pane
-
-            # heart collect game
-            if paneheart2.get_rect(center=(390 + 200, 450 + 50)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    paneheart2, (420, 90)), (385, 450))
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                    press = 1
-                    while f == 1:
-
-                        a = pane2heartwindow()
-                        self.running_mode = a
-                        self.running_mode.crashed = self.crashed
-                        a = a.run(gameDisplay, info)
-
-                        f = scorewindow()
-                        self.running_mode = f
-                        self.running_mode.crashed = self.crashed
-                        f = f.run(gameDisplay, a, 6)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-                gameDisplay.blit(paneheart2, (390, 450))  # paneheart
-
-            gameDisplay.blit(howto, (490, 550))
-
-            if hlp.get_rect(center=(550 + 20, 580 + 20)).collidepoint(mos_x, mos_y):  # RULES
-                gameDisplay.blit(pygame.transform.scale(
-                    hlp, (88, 88)), (548, 580))
-
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-                    press = 1
-                    a = rules()
-                    self.running_mode = a
-                    self.running_mode.crashed = self.crashed
-                    a = a.run(gameDisplay, info)
-
-                if event.type == pygame.MOUSEBUTTONUP:
-                    press = 0
-
-            else:
-
-                gameDisplay.blit(hlp, (550, 580))     # help
-
-            maxnormal = font1.render("Best: " + str(maxnormal), 1, (0, 0, 0))
-            maxnightmare = font1.render(
-                "Best: " + str(maxnightmare), 1, (0, 0, 0))
-            maxfear = font1.render("Best: " + str(maxfear), 1, (0, 0, 0))
-            maxinferno = font1.render("Best: " + str(maxinferno), 1, (0, 0, 0))
-            maximpossible = font1.render(
-                "Best: " + str(maximpossible), 1, (0, 0, 0))
-            maxcardiac = font1.render("Best: " + str(maxcardiac), 1, (0, 0, 0))
-
-            # Scores Display
-
-            gameDisplay.blit(maxnormal, (540, 200))
-            gameDisplay.blit(maxnightmare, (410, 300))
-            gameDisplay.blit(maxfear, (560, 300))
-            gameDisplay.blit(maxinferno, (700, 300))
-            gameDisplay.blit(maximpossible, (560, 410))
-            gameDisplay.blit(maxcardiac, (560, 510))
-
-            if os.path.getsize(score_path) > 0:
-
-                with open(score_path, 'rb') as input:  # REading
-                    maxscore = pickle.load(input)
-
-            maxnormal = maxscore[0]
-            maxnightmare = maxscore[1]
-            maxfear = maxscore[2]
-            maxinferno = maxscore[3]
-            maximpossible = maxscore[4]
-            maxcardiac = maxscore[5]
-
-            f = 1
-            # press=0
+            self.f = 1
             pygame.display.update()
-            clock.tick(60)
-            
+            self.clock.tick(60)
+
+        return
 
 if __name__ == "__main__":
     g = game()
-    g.run()
