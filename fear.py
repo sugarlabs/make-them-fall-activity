@@ -1,11 +1,11 @@
 
+from random import *
+import sys
+import pygame
+import pickle
+from gi.repository import Gtk
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-import pickle
-import pygame
-import sys
-from random import *
 
 
 class pane4window:
@@ -62,7 +62,7 @@ class pane4window:
         timer = pygame.time.Clock()
 
         sound = True
-        
+
         jump = pygame.mixer.Sound("data/sound/jump.wav")
         scoremusic = pygame.mixer.Sound("data/sound/score.wav")
         collide = pygame.mixer.Sound("data/sound/fall.wav")
@@ -75,7 +75,7 @@ class pane4window:
             event = pygame.event.poll()
             # totaltime+=timer.tick()
             if event.type == pygame.QUIT:
-               return
+                return
 
             # print event
 
@@ -188,7 +188,7 @@ class pane4window:
                     rightdownmove -= 30
                 time2 += 1
 
-            #[350,608]   [659, 916]
+            # [350,608]   [659, 916]
 
             # upper Guys Display
 
@@ -266,22 +266,22 @@ class pane4window:
                 scoremusic.play(0)
                 score += 1
 
-            if(y_axis1 < -40):
+            if (y_axis1 < -40):
                 orientation1 = randint(0, 1)
 
                 y_axis1 = 400
 
-            if(y_axis2 < 380):
+            if (y_axis2 < 380):
                 orientation2 = randint(0, 1)
 
                 y_axis2 = 700
 
-            if(y_axisa < -40):
+            if (y_axisa < -40):
                 orientation4 = randint(0, 1)
 
                 y_axisa = 400
 
-            if(y_axisb < 380):
+            if (y_axisb < 380):
                 orientation5 = randint(0, 1)
 
                 y_axisb = 700
@@ -309,3 +309,4 @@ class pane4window:
 
             pygame.display.update()
             clock.tick(60)
+            

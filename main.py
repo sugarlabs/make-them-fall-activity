@@ -50,6 +50,7 @@ score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
 black = (0, 0, 0)
 white = (255, 255, 255)
 
+
 class game:
 
     sound = True
@@ -66,7 +67,7 @@ class game:
         self.buttons = []
 
         self.maxscore = [0, 0, 0, 0, 0, 0]
-    
+
     def run_game(self, window, gamenumber):
         self.running_mode = window()
         self.running_mode.crashed = self.crashed
@@ -74,7 +75,7 @@ class game:
 
         if scorewindow(self.gameDisplay, s, gamenumber).run():
             self.run_game(window, gamenumber)
-        
+
         self.start()
 
     def show_help(self):
@@ -93,10 +94,10 @@ class game:
     def start(self):
 
         self.gameDisplay = pygame.display.get_surface()
-        
+
         self.info = pygame.display.Info()
 
-        if not(self.gameDisplay):
+        if not (self.gameDisplay):
 
             self.gameDisplay = pygame.display.set_mode(
                 (self.info.current_w, self.info.current_h))
@@ -117,7 +118,7 @@ class game:
         font1.set_bold(True)
 
         if not os.path.exists(score_path):
-            open(score_path,'w+')
+            open(score_path, 'w+')
 
         if os.path.getsize(score_path) > 0:
 
@@ -128,25 +129,34 @@ class game:
         maxnightmare = font1.render(
             "Best: " + str(self.maxscore[1]), True, black)
         maxfear = font1.render("Best: " + str(self.maxscore[2]), True, black)
-        maxinferno = font1.render("Best: " + str(self.maxscore[3]), True, black)
+        maxinferno = font1.render(
+            "Best: " + str(self.maxscore[3]), True, black)
         maximpossible = font1.render(
             "Best: " + str(self.maxscore[4]), True, black)
-        maxcardiac = font1.render("Best: " + str(self.maxscore[5]), True, black)
+        maxcardiac = font1.render(
+            "Best: " + str(self.maxscore[5]), True, black)
 
-        self.buttons.append(Button(390, 150, "data/images/welcomescreen/2pane.png", lambda : self.run_game(pane2window, 1), maxnormal))
-        self.buttons.append(Button(390, 250, "data/images/welcomescreen/3pane.png", lambda : self.run_game(pane3window, 2), maxnightmare))
-        self.buttons.append(Button(530, 250, "data/images/welcomescreen/4pane.png", lambda : self.run_game(pane4window, 3), maxfear))
-        self.buttons.append(Button(670, 250, "data/images/welcomescreen/5pane.png", lambda : self.run_game(pane5window, 4), maxinferno))
-        self.buttons.append(Button(390, 350, "data/images/welcomescreen/6pane.png", lambda : self.run_game(pane6window, 5), maximpossible))
-        self.buttons.append(Button(390, 450, "data/images/welcomescreen/2paneheart.png", lambda : self.run_game(pane2heartwindow, 6), maxcardiac))
-        
+        self.buttons.append(Button(390, 150, "data/images/welcomescreen/2pane.png",
+                            lambda: self.run_game(pane2window, 1), maxnormal))
+        self.buttons.append(Button(390, 250, "data/images/welcomescreen/3pane.png",
+                            lambda: self.run_game(pane3window, 2), maxnightmare))
+        self.buttons.append(Button(530, 250, "data/images/welcomescreen/4pane.png",
+                            lambda: self.run_game(pane4window, 3), maxfear))
+        self.buttons.append(Button(670, 250, "data/images/welcomescreen/5pane.png",
+                            lambda: self.run_game(pane5window, 4), maxinferno))
+        self.buttons.append(Button(390, 350, "data/images/welcomescreen/6pane.png",
+                            lambda: self.run_game(pane6window, 5), maximpossible))
+        self.buttons.append(Button(390, 450, "data/images/welcomescreen/2paneheart.png",
+                            lambda: self.run_game(pane2heartwindow, 6), maxcardiac))
+
         hlp = pygame.image.load("data/images/welcomescreen/help.png")
         howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
-        
+
         self.gameDisplay.blit(howto, (490, 550))
 
-        self.buttons.append(Button(550, 580, "data/images/welcomescreen/help.png", self.show_help))
-    
+        self.buttons.append(
+            Button(550, 580, "data/images/welcomescreen/help.png", self.show_help))
+
     def run(self):
         self.gameDisplay = pygame.display.get_surface()
 
@@ -170,5 +180,7 @@ class game:
 
         return
 
+
 if __name__ == "__main__":
     g = game()
+    

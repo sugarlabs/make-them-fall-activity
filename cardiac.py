@@ -1,11 +1,11 @@
 
+from random import *
+import sys
+import pygame
+import pickle
+from gi.repository import Gtk
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-import pickle
-import pygame
-import sys
-from random import *
 
 
 class pane2heartwindow:
@@ -136,7 +136,7 @@ class pane2heartwindow:
                     rightmove -= 34
                 time2 += 1
 
-            #[350,608]   [659, 916]
+            # [350,608]   [659, 916]
 
             # Guy Display
 
@@ -206,26 +206,26 @@ class pane2heartwindow:
                 flag = 0
                 speed += 0.1
 
-            if (y_axis1 <= -40 and flag1 != 1) or (y_axis2 <= -40 and flag2 != 1) or (y_axisa <= -40 and flag3 != 1)or (y_axisb <= -40 and flag4 != 1):
+            if (y_axis1 <= -40 and flag1 != 1) or (y_axis2 <= -40 and flag2 != 1) or (y_axisa <= -40 and flag3 != 1) or (y_axisb <= -40 and flag4 != 1):
                 collide.play(0)
                 numberofhearts += 1
 
-            if(y_axis1 < -40):
+            if (y_axis1 < -40):
                 orientation1 = randint(0, 1)
                 flag1 = 0
                 y_axis1 = 700
 
-            if(y_axis2 < -40):
+            if (y_axis2 < -40):
                 orientation2 = randint(0, 1)
                 flag2 = 0
                 y_axis2 = 700
 
-            if(y_axisa < -40):
+            if (y_axisa < -40):
                 orientation4 = randint(0, 1)
                 flag3 = 0
                 y_axisa = 700
 
-            if(y_axisb < -40):
+            if (y_axisb < -40):
                 orientation5 = randint(0, 1)
                 flag4 = 0
                 y_axisb = 700
@@ -285,3 +285,4 @@ class pane2heartwindow:
 
             if numberofhearts == 3:
                 return score
+                

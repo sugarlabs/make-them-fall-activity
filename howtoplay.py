@@ -1,10 +1,11 @@
+
+from random import *
+import sys
+import pygame
+import pickle
+from gi.repository import Gtk
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-import pickle
-import pygame
-import sys
-from random import *
 
 
 class rules:
@@ -26,7 +27,7 @@ class rules:
         back = pygame.transform.scale(back, (70, 40))
 
         sound = True
-        
+
         while not self.crashed:
             # Gtk events
 
@@ -45,7 +46,7 @@ class rules:
             if back.get_rect(center=(750 + 35, 10 + 15)).collidepoint(mos_x, mos_y):
                 gameDisplay.blit(pygame.transform.scale(
                     back, (75, 45)), (725, 5))
-                if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
+                if (pygame.mouse.get_pressed())[0] == 1 and press == 0:
                     press = 1
                     return
 
@@ -55,7 +56,7 @@ class rules:
             else:
                 gameDisplay.blit(back, (725, 5))
 
-            #pygame.draw.circle(gameDisplay,(255,255,255), (750+35,20+15),5,2)
+            # pygame.draw.circle(gameDisplay,(255,255,255), (750+35,20+15),5,2)
 
             pygame.display.update()
             clock.tick(60)
