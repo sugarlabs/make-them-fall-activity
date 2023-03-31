@@ -126,4 +126,3 @@ class scorewindow:
 
             pygame.display.update()
             clock.tick(60)
-            
