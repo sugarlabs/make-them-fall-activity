@@ -41,4 +41,3 @@ class Button:
 
         if self.hovered() and pygame.mouse.get_pressed()[0] == 1:
             self.action()
-            

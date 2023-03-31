@@ -285,4 +285,3 @@ class pane2heartwindow:
 
             if numberofhearts == 3:
                 return score
-                

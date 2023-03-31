@@ -309,4 +309,3 @@ class pane4window:
 
             pygame.display.update()
             clock.tick(60)
-            
