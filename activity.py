@@ -12,6 +12,7 @@ from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.graphics.toolbutton import ToolButton
 from sugar3.activity.widgets import StopButton
+from sugar3.graphics.toolcombobox import ToolComboBox
 from gettext import gettext as _
 import main
 
@@ -57,6 +58,20 @@ class Activity(activity.Activity):
         separator.set_expand(True)
         toolbar_box.toolbar.insert(separator, -1)
         separator.show()
+        # Add a pause/resume button
+        self.paused = False
+        pause_icon = 'media-playback-pause-symbolic' if self.paused else 'media-playback-start-symbolic'
+        self.pause_button = ToolButton(pause_icon)
+        self.pause_button.set_tooltip(_('Pause'))
+        self.pause_button.connect('clicked', self.pause_resume_control)
+        toolbar_box.toolbar.insert(self.pause_button, -1)
+
+        separator = Gtk.SeparatorToolItem()
+        separator.props.draw = False
+        separator.set_expand(False)
+        toolbar_box.toolbar.insert(separator, -1)
+        separator.show()
+        
 
         stop_button = StopButton(self)
         toolbar_box.toolbar.insert(stop_button, -1)
@@ -64,6 +79,7 @@ class Activity(activity.Activity):
         stop_button.connect('clicked', self._stop_cb)
 
         self.show_all()
+     
 
     def sound_control(self, button):
         self.sound = not self.sound
@@ -74,7 +90,16 @@ class Activity(activity.Activity):
         else:
             button.set_icon_name('speaker-muted-100')
             button.set_tooltip(_('Sound'))
-
+    def pause_resume_control(self, button):
+        self.paused = not self.paused
+        if self.paused:
+            self.game.pause()
+            self.pause_button.set_icon_name('media-playback-start-symbolic')
+            self.pause_button.set_tooltip(_('Resume'))
+        else:
+            self.game.resume()
+            self.pause_button.set_icon_name('media-playback-pause-symbolic')
+            self.pause_button.set_tooltip(_('Pause'))
     def _stop_cb(self, button):
         self.game.crashed = True
         if self.game.running_mode:
