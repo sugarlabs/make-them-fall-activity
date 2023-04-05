@@ -56,7 +56,7 @@ class scorewindow:
             with open(score_path, 'rb') as inp:  # Reading
                 maxscore = pickle.load(inp)
 
-        if score > maxscore[gamenumber - 1]:
+        if score is not None and score > maxscore[gamenumber - 1]:
             best = score
             ifbest = True
             maxscore[gamenumber - 1] = score
