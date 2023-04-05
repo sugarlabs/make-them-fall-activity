@@ -11,7 +11,7 @@ from random import *\
 from sugar3.activity.activity import get_activity_root 
 from button import Button
 
-lack = (0, 0, 0)
+black = (0, 0, 0)
 white = (255, 255, 255)
 
 
