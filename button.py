@@ -18,6 +18,8 @@ class Button:
 
         self.action = action
 
+        self.press = False
+
         self.draw()
 
     def draw(self):
@@ -39,5 +41,11 @@ class Button:
     def update(self):
         self.draw()
 
-        if self.hovered() and pygame.mouse.get_pressed()[0] == 1:
+        if self.press == True and self.hovered() and pygame.mouse.get_pressed()[0] != 1:
             self.action()
+
+        if self.hovered() and pygame.mouse.get_pressed()[0] == 1:
+            self.press = True
+        else:
+            self.press = False
+
