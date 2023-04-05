@@ -5,10 +5,8 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pickle
 import pygame
-import sys
-from random import *\
 
-from sugar3.activity.activity import get_activity_root 
+from sugar3.activity.activity import get_activity_root
 from button import Button
 
 black = (0, 0, 0)
@@ -44,8 +42,6 @@ class scorewindow:
 
         maxscore = [0, 0, 0, 0, 0, 0]
 
-        sound = True
-
         score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
 
         if not os.path.exists(score_path):
@@ -74,21 +70,25 @@ class scorewindow:
 
         self.buttons = []
 
-        if ifbest == True:
+        if ifbest is True:
             gameDisplay.blit(newbestscore, (450, 160))
             gameDisplay.blit(best, (560, 190))
-            self.buttons.append(
-                Button(450, 250, "data/images/scorescreen/tryagain.png", self._try_again_cb))
-            self.buttons.append(
-                Button(450, 340, "data/images/scorescreen/back.png", self._back_home_cb))
+            self.buttons.append(Button(450, 250,
+                                       "data/images/scorescreen/tryagain.png",
+                                       self._try_again_cb))
+            self.buttons.append(Button(450, 340,
+                                       "data/images/scorescreen/back.png",
+                                       self._back_home_cb))
         else:
             gameDisplay.blit(scoreboard, (450 + 5, 160))
             gameDisplay.blit(score, (570, 210))
             gameDisplay.blit(best, (560, 320))
-            self.buttons.append(Button(
-                450, 250 + 150, "data/images/scorescreen/tryagain.png", self._try_again_cb))
-            self.buttons.append(
-                Button(450, 340 + 150, "data/images/scorescreen/back.png", self._back_home_cb))
+            self.buttons.append(Button(450, 250 + 150,
+                                       "data/images/scorescreen/tryagain.png",
+                                       self._try_again_cb))
+            self.buttons.append(Button(450, 340 + 150,
+                                       "data/images/scorescreen/back.png",
+                                       self._back_home_cb))
 
         self.crashed = False
 
@@ -103,7 +103,6 @@ class scorewindow:
             return
 
         clock = pygame.time.Clock()
-        timer = pygame.time.Clock()
 
         while not self.crashed:
             if self.tryagain:
