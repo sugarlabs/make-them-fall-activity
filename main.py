@@ -27,19 +27,17 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pickle
 import pygame
-import sys
-from gettext import gettext as _
 
-from sugar3.activity.activity import get_activity_root 
+from sugar3.activity.activity import get_activity_root
 
-from normal import *
-from nightmare import *
-from fear import *
-from cardiac import *
-from impossible import *
-from inferno import *
-from scorescreen import *
-from howtoplay import *
+from normal import pane2window
+from nightmare import pane3window
+from fear import pane4window
+from cardiac import pane2heartwindow
+from inferno import pane5window
+from impossible import pane6window
+from scorescreen import scorewindow
+from howtoplay import rules
 from button import Button
 
 disp_width = 600
@@ -59,7 +57,6 @@ class game:
         self.crashed = False
         self.running_mode = None
         self.clock = pygame.time.Clock()
-        timer = pygame.time.Clock()
 
         self.gameDisplay = None
         self.info = None
@@ -136,26 +133,42 @@ class game:
         maxcardiac = font1.render(
             "Best: " + str(self.maxscore[5]), True, black)
 
-        self.buttons.append(Button(390, 150, "data/images/welcomescreen/2pane.png",
-                            lambda: self.run_game(pane2window, 1), maxnormal))
-        self.buttons.append(Button(390, 250, "data/images/welcomescreen/3pane.png",
-                            lambda: self.run_game(pane3window, 2), maxnightmare))
-        self.buttons.append(Button(530, 250, "data/images/welcomescreen/4pane.png",
-                            lambda: self.run_game(pane4window, 3), maxfear))
-        self.buttons.append(Button(670, 250, "data/images/welcomescreen/5pane.png",
-                            lambda: self.run_game(pane5window, 4), maxinferno))
-        self.buttons.append(Button(390, 350, "data/images/welcomescreen/6pane.png",
-                            lambda: self.run_game(pane6window, 5), maximpossible))
-        self.buttons.append(Button(390, 450, "data/images/welcomescreen/2paneheart.png",
-                            lambda: self.run_game(pane2heartwindow, 6), maxcardiac))
+        self.buttons.append(Button(390, 150,
+                                   "data/images/welcomescreen/2pane.png",
+                                   lambda: self.run_game(pane2window, 1),
+                                   maxnormal))
 
-        hlp = pygame.image.load("data/images/welcomescreen/help.png")
+        self.buttons.append(Button(390, 250,
+                                   "data/images/welcomescreen/3pane.png",
+                                   lambda: self.run_game(pane3window, 2),
+                                   maxnightmare))
+
+        self.buttons.append(Button(530, 250,
+                                   "data/images/welcomescreen/4pane.png",
+                                   lambda: self.run_game(pane4window, 3),
+                                   maxfear))
+
+        self.buttons.append(Button(670, 250,
+                                   "data/images/welcomescreen/5pane.png",
+                                   lambda: self.run_game(pane5window, 4),
+                                   maxinferno))
+
+        self.buttons.append(Button(390, 350,
+                                   "data/images/welcomescreen/6pane.png",
+                                   lambda: self.run_game(pane6window, 5),
+                                   maximpossible))
+
+        self.buttons.append(Button(390, 450,
+                                   "data/images/welcomescreen/2paneheart.png",
+                                   lambda: self.run_game(pane2heartwindow, 6),
+                                   maxcardiac))
+
+        self.buttons.append(Button(550, 580,
+                                   "data/images/welcomescreen/help.png",
+                                   self.show_help))
+
         howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
-
         self.gameDisplay.blit(howto, (490, 550))
-
-        self.buttons.append(
-            Button(550, 580, "data/images/welcomescreen/help.png", self.show_help))
 
     def run(self):
         self.gameDisplay = pygame.display.get_surface()
