@@ -68,18 +68,17 @@ class game:
     def run_game(self, window, gamenumber):
         self.running_mode = window()
         self.running_mode.crashed = self.crashed
-        s = self.running_mode.run(self.gameDisplay, self.info)
+        score_data = self.running_mode.run(self.gameDisplay, self.info)
 
-        if scorewindow(self.gameDisplay, s, gamenumber).run():
+        if scorewindow(self.gameDisplay, score_data, gamenumber).run():
             self.run_game(window, gamenumber)
 
         self.start()
 
     def show_help(self):
-        a = rules()
-        self.running_mode = a
+        self.running_mode = rules()
         self.running_mode.crashed = self.crashed
-        a = a.run(self.gameDisplay, self.info)
+        self.running_mode = self.running_mode.run(self.gameDisplay, self.info)
 
         self.start()
 
