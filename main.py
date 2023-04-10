@@ -116,10 +116,7 @@ class game:
         if not os.path.exists(score_path):
             open(score_path, 'w+')
 
-        if os.path.getsize(score_path) > 0:
-
-            with open(score_path, 'rb') as inp:  # Reading
-                self.maxscore = pickle.load(inp)
+        self.update_highscore()
 
         maxnormal = font1.render("Best: " + str(self.maxscore[0]), True, black)
         maxnightmare = font1.render(
