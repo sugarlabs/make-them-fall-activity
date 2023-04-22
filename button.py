@@ -32,20 +32,20 @@ class Button:
 
         if self.text is not None:
             text_rect = self.text.get_rect()
-            self.gameDisplay.blit(self.text, (self.x + self.rect.width / 2 -
-                                  text_rect.width / 2, self.y + self.rect.height - 1.5 * text_rect.height))
+            m_x = self.x + self.rect.width / 2 - text_rect.width / 2
+            m_y = self.y + self.rect.height - 1.5 * text_rect.height
+            self.gameDisplay.blit(self.text, (m_x, m_y))
 
     def hovered(self):
         return self.rect.collidepoint(pygame.mouse.get_pos())
 
     def update(self):
         self.draw()
-
-        if self.press == True and self.hovered() and pygame.mouse.get_pressed()[0] != 1:
+        pressed_btn = pygame.mouse.get_pressed()[0]
+        if self.press and self.hovered() and pressed_btn != 1:
             self.action()
 
-        if self.hovered() and pygame.mouse.get_pressed()[0] == 1:
+        if self.hovered() and pressed_btn == 1:
             self.press = True
         else:
             self.press = False
-
