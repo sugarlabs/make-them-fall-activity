@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pygame
 import sugargame.canvas
-from sugar3.activity import activity
+from sugar3.activity.activity import Activity
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.graphics.toolbutton import ToolButton
@@ -15,10 +15,10 @@ from gettext import gettext as _
 import main
 
 
-class Activity(activity.Activity):
+class MakeThemFall(Activity):
 
     def __init__(self, handle):
-        activity.Activity.__init__(self, handle)
+        Activity.__init__(self, handle)
         self.max_participants = 1
         self.sound = True
         self.game = main.game()
