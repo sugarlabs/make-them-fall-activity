@@ -5,7 +5,6 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pygame
-import sugargame
 import sugargame.canvas
 from sugar3.activity import activity
 from sugar3.graphics.toolbarbox import ToolbarBox
