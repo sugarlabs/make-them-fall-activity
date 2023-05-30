@@ -1,6 +1,5 @@
 
 from random import *
-import sys
 import pygame
 import pickle
 from gi.repository import Gtk
