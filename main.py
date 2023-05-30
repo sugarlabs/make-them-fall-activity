@@ -52,7 +52,7 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 
-class game:
+class MakeThemFallGame:
 
     sound = True
 
@@ -170,7 +170,7 @@ class game:
         self.gameDisplay.blit(howto, (490, 550))
 
     def run(self):
-        self.gameDisplay = pygame.display.get_surface()
+        self.start()
 
         while self.running:
             # Gtk events

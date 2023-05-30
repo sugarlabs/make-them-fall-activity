@@ -5,34 +5,35 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import pygame
-import sugargame.canvas
+
 from sugar3.activity.activity import Activity
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.graphics.toolbutton import ToolButton
 from sugar3.activity.widgets import StopButton
+
+import sugargame.canvas
+
 from gettext import gettext as _
-import main
+from main import MakeThemFallGame
 
 
-class MakeThemFall(Activity):
+class MakeThemFallActivity(Activity):
 
     def __init__(self, handle):
         Activity.__init__(self, handle)
         self.max_participants = 1
         self.sound = True
-        self.game = main.game()
+        self.game = MakeThemFallGame()
+        self.build_toolbar()
         self.game.canvas = sugargame.canvas.PygameCanvas(
                 self,
                 main=self.game.run,
                 modules=[pygame.display, pygame.font, pygame.mixer])
         self.set_canvas(self.game.canvas)
         self.game.canvas.grab_focus()
-        self.build_toolbar()
-        self.game.start()
 
     def build_toolbar(self):
-
         toolbar_box = ToolbarBox()
         self.set_toolbar_box(toolbar_box)
         toolbar_box.show()
@@ -62,8 +63,6 @@ class MakeThemFall(Activity):
         toolbar_box.toolbar.insert(stop_button, -1)
         stop_button.show()
         stop_button.connect('clicked', self._stop_cb)
-
-        self.show_all()
 
     def sound_control(self, button):
         self.sound = not self.sound
