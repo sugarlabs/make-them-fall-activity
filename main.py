@@ -43,7 +43,10 @@ from button import Button
 disp_width = 600
 disp_height = 600
 
-score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+try:
+    score_path = os.path.join(get_activity_root(), 'data', 'score.pkl')
+except KeyError:
+    score_path = '/tmp/score.pkl'
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -189,6 +192,12 @@ class game:
 
         return
 
+def main():
+    pygame.init()
+    pygame.display.set_mode((0, 0), pygame.RESIZABLE)
+    game = MakeThemFallGame()
+    game.run()
+
 
 if __name__ == "__main__":
-    g = game()
+    main()
