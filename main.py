@@ -191,7 +191,7 @@ class MakeThemFallGame:
 
             self.f = 1
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(30)
 
         return
 
