@@ -76,6 +76,6 @@ class MakeThemFall(Activity):
             button.set_tooltip(_('Sound'))
 
     def _stop_cb(self, button):
-        self.game.crashed = True
+        self.game.running = False
         if self.game.running_mode:
-            self.game.running_mode.crashed = True
+            self.game.running_mode.running = False

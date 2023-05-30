@@ -91,7 +91,7 @@ class scorewindow:
                                        "data/images/scorescreen/back.png",
                                        self._back_home_cb))
 
-        self.crashed = False
+        self.running = True
 
     def _try_again_cb(self):
         self.tryagain = True
@@ -100,12 +100,12 @@ class scorewindow:
         self.backhome = True
 
     def run(self):
-        if self.crashed:
+        if not self.running:
             return
 
         clock = pygame.time.Clock()
 
-        while not self.crashed:
+        while self.running:
             if self.tryagain:
                 return 1
             if self.backhome:

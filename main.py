@@ -57,7 +57,7 @@ class game:
     sound = True
 
     def __init__(self):
-        self.crashed = False
+        self.running = True
         self.running_mode = None
         self.clock = pygame.time.Clock()
 
@@ -70,7 +70,7 @@ class game:
 
     def run_game(self, window, gamenumber):
         self.running_mode = window()
-        self.running_mode.crashed = self.crashed
+        self.running_mode.running = self.running
         score_data = self.running_mode.run(self.gameDisplay, self.info)
 
         if scorewindow(self.gameDisplay, score_data, gamenumber).run():
@@ -80,7 +80,7 @@ class game:
 
     def show_help(self):
         self.running_mode = rules()
-        self.running_mode.crashed = self.crashed
+        self.running_mode.running = self.running
         self.running_mode = self.running_mode.run(self.gameDisplay, self.info)
 
         self.start()
@@ -172,11 +172,11 @@ class game:
     def run(self):
         self.gameDisplay = pygame.display.get_surface()
 
-        while not self.crashed:
+        while self.running:
             # Gtk events
             while Gtk.events_pending():
                 Gtk.main_iteration()
-            if self.crashed:
+            if not self.running:
                 break
 
             event = pygame.event.poll()

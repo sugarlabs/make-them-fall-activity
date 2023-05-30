@@ -65,7 +65,7 @@ class pane4window:
         scoremusic = pygame.mixer.Sound("data/sound/score.wav")
         collide = pygame.mixer.Sound("data/sound/fall.wav")
 
-        while not self.crashed:
+        while self.running:
             # Gtk events
 
             while Gtk.events_pending():
