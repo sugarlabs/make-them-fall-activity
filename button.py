@@ -8,8 +8,8 @@ class Button:
         self.graphic = pygame.image.load(image_path)
         self.rect = self.graphic.get_rect()
 
-        self.x = x
-        self.y = y
+        self.x = x - self.rect.width / 2
+        self.y = y - self.rect.height / 2
         self.rect.x = self.x
         self.rect.y = self.y
 

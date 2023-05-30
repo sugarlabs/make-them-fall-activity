@@ -13,7 +13,7 @@ white = (255, 255, 255)
 
 class scorewindow:
 
-    def __init__(self, gameDisplay, score, gamenumber):
+    def __init__(self, gameDisplay, score, gamenumber, game):
         background = pygame.image.load(
             "data/images/scorescreen/whitebackground.png")
         gameover = pygame.image.load("data/images/scorescreen/gameover.png")
@@ -22,7 +22,7 @@ class scorewindow:
         scoreboard = pygame.image.load(
             "data/images/scorescreen/scoreboard.png")
 
-        background = pygame.transform.scale(background, (600 - 100, 768))
+        background = pygame.transform.scale(background, game.visible_size)
 
         font_path = "fonts/arial.ttf"
         font_size = 50
@@ -66,28 +66,28 @@ class scorewindow:
         best = font2.render(str(best), 1, white)
 
         gameDisplay.fill(black)
-        gameDisplay.blit(background, (0 + 350, 0))
-        gameDisplay.blit(gameover, (350 + 60, 50 + 30))
+        gameDisplay.blit(background, game.screen_origin)
+        game.place_centered(gameover, game.vw(50), game.vh(10))
 
         self.buttons = []
 
         if ifbest is True:
-            gameDisplay.blit(newbestscore, (450, 160))
-            gameDisplay.blit(best, (560, 190))
-            self.buttons.append(Button(450, 250,
+            game.place_centered(newbestscore, game.vw(50), game.vh(20))
+            game.place_centered(best, game.vw(50), game.vh(22))
+            self.buttons.append(Button(game.vw(50), game.vh(30),
                                        "data/images/scorescreen/tryagain.png",
                                        self._try_again_cb))
-            self.buttons.append(Button(450, 340,
+            self.buttons.append(Button(game.vw(50), game.vh(40),
                                        "data/images/scorescreen/back.png",
                                        self._back_home_cb))
         else:
-            gameDisplay.blit(scoreboard, (450 + 5, 160))
-            gameDisplay.blit(score, (570, 210))
-            gameDisplay.blit(best, (560, 320))
-            self.buttons.append(Button(450, 250 + 150,
+            game.place_centered(scoreboard, game.vw(50), game.vh(28))
+            game.place_centered(score, game.vw(50), game.vh(24))
+            game.place_centered(best, game.vw(50), game.vh(36))
+            self.buttons.append(Button(game.vw(50), game.vh(48),
                                        "data/images/scorescreen/tryagain.png",
                                        self._try_again_cb))
-            self.buttons.append(Button(450, 340 + 150,
+            self.buttons.append(Button(game.vw(50), game.vh(60),
                                        "data/images/scorescreen/back.png",
                                        self._back_home_cb))
 

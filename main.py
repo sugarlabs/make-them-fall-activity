@@ -63,6 +63,8 @@ class MakeThemFallGame:
 
         self.gameDisplay = None
         self.info = None
+        self.screen_origin = [0, 0]
+        self.visible_size = [0, 0]
 
         self.buttons = []
 
@@ -73,7 +75,7 @@ class MakeThemFallGame:
         self.running_mode.running = self.running
         score_data = self.running_mode.run(self.gameDisplay, self.info)
 
-        if scorewindow(self.gameDisplay, score_data, gamenumber).run():
+        if scorewindow(self.gameDisplay, score_data, gamenumber, self).run():
             self.run_game(window, gamenumber)
 
         self.start()
@@ -81,7 +83,9 @@ class MakeThemFallGame:
     def show_help(self):
         self.running_mode = rules()
         self.running_mode.running = self.running
-        self.running_mode = self.running_mode.run(self.gameDisplay, self.info)
+        self.running_mode = self.running_mode.run(self.gameDisplay,
+                                                  self.visible_size,
+                                                  self.screen_origin)
 
         self.start()
 
@@ -89,6 +93,17 @@ class MakeThemFallGame:
         if os.path.getsize(score_path) > 0:
             with open(score_path, 'rb') as inp:  # Reading
                 self.maxscore = pickle.load(inp)
+
+    def vw(self, x):
+        return self.screen_origin[0] + (x / 100) * self.visible_size[0]
+
+    def vh(self, y):
+        return self.screen_origin[1] + (y / 100) * self.visible_size[1]
+
+    def place_centered(self, surf, x, y):
+        rect = surf.get_rect()
+        centered_coords = (x - rect.width / 2, y - rect.height / 2)
+        self.gameDisplay.blit(surf, centered_coords)
 
     def start(self):
 
@@ -109,7 +124,14 @@ class MakeThemFallGame:
 
         background = pygame.image.load(
             "data/images/welcomescreen/background.png")
-        self.gameDisplay.blit(background, (350, 0))
+
+        bg_rect = background.get_rect()
+        display_rect = self.gameDisplay.get_rect()
+
+        self.screen_origin[0] = (display_rect.width - bg_rect.width) / 2
+        self.visible_size = [bg_rect.width, bg_rect.height]
+
+        self.gameDisplay.blit(background, self.screen_origin)
 
         font_path = "fonts/arial.ttf"
         font_size = 18
@@ -132,42 +154,43 @@ class MakeThemFallGame:
         maxcardiac = font1.render(
             "Best: " + str(self.maxscore[5]), True, black)
 
-        self.buttons.append(Button(390, 150,
+        self.buttons.append(Button(self.vw(50), self.vh(26),
                                    "data/images/welcomescreen/2pane.png",
                                    lambda: self.run_game(pane2window, 1),
                                    maxnormal))
 
-        self.buttons.append(Button(390, 250,
+        self.buttons.append(Button(self.vw(50), self.vh(38),
                                    "data/images/welcomescreen/3pane.png",
                                    lambda: self.run_game(pane3window, 2),
                                    maxnightmare))
 
-        self.buttons.append(Button(530, 250,
+        self.buttons.append(Button(self.vw(20), self.vh(38),
                                    "data/images/welcomescreen/4pane.png",
                                    lambda: self.run_game(pane4window, 3),
                                    maxfear))
 
-        self.buttons.append(Button(670, 250,
+        self.buttons.append(Button(self.vw(80), self.vh(38),
                                    "data/images/welcomescreen/5pane.png",
                                    lambda: self.run_game(pane5window, 4),
                                    maxinferno))
 
-        self.buttons.append(Button(390, 350,
+        self.buttons.append(Button(self.vw(50), self.vh(50),
                                    "data/images/welcomescreen/6pane.png",
                                    lambda: self.run_game(pane6window, 5),
                                    maximpossible))
 
-        self.buttons.append(Button(390, 450,
+        self.buttons.append(Button(self.vw(50), self.vh(62),
                                    "data/images/welcomescreen/2paneheart.png",
                                    lambda: self.run_game(pane2heartwindow, 6),
                                    maxcardiac))
 
-        self.buttons.append(Button(550, 580,
+        self.buttons.append(Button(self.vw(50), self.vh(74),
                                    "data/images/welcomescreen/help.png",
                                    self.show_help))
 
         howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
-        self.gameDisplay.blit(howto, (490, 550))
+
+        self.place_centered(howto, self.vw(50), self.vh(82))
 
     def run(self):
         self.start()
@@ -194,6 +217,7 @@ class MakeThemFallGame:
             self.clock.tick(30)
 
         return
+
 
 def main():
     pygame.init()
