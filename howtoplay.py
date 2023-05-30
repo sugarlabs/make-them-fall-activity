@@ -26,7 +26,7 @@ class rules:
 
         sound = True
 
-        while not self.crashed:
+        while self.running:
             # Gtk events
 
             while Gtk.events_pending():
