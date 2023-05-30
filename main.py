@@ -22,11 +22,11 @@
 
 
 import os
+import pygame
+import pickle
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-import pickle
-import pygame
 
 from sugar3.activity.activity import get_activity_root
 
