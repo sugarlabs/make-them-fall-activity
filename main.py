@@ -179,9 +179,12 @@ class MakeThemFallGame:
             if not self.running:
                 break
 
-            event = pygame.event.poll()
-            if event.type == pygame.QUIT:
-                return
+            # Pump PyGame messages.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return
+                elif event.type == pygame.VIDEORESIZE:
+                    pass
 
             for btn in self.buttons:
                 btn.update()
