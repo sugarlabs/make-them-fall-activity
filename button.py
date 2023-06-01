@@ -8,8 +8,9 @@ class Button:
         self.graphic = pygame.image.load(image_path)
         self.rect = self.graphic.get_rect()
 
-        self.x = x - self.rect.width / 2
-        self.y = y - self.rect.height / 2
+        self.x = x - self.rect.width // 2
+        self.y = y - self.rect.height //  2
+        print(self.x, self.y)
         self.rect.x = self.x
         self.rect.y = self.y
 
@@ -32,7 +33,7 @@ class Button:
 
         if self.text is not None:
             text_rect = self.text.get_rect()
-            m_x = self.x + self.rect.width / 2 - text_rect.width / 2
+            m_x = self.x + self.rect.width // 2 - text_rect.width // 2
             m_y = self.y + self.rect.height - 1.5 * text_rect.height
             self.gameDisplay.blit(self.text, (m_x, m_y))
 
