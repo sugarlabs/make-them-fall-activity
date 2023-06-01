@@ -10,7 +10,6 @@ class Button:
 
         self.x = x - self.rect.width // 2
         self.y = y - self.rect.height //  2
-        print(self.x, self.y)
         self.rect.x = self.x
         self.rect.y = self.y
 
