@@ -102,7 +102,7 @@ class MakeThemFallGame:
 
     def place_centered(self, surf, x, y):
         rect = surf.get_rect()
-        centered_coords = (x - rect.width / 2, y - rect.height / 2)
+        centered_coords = (x - rect.width // 2, y - rect.height // 2)
         self.gameDisplay.blit(surf, centered_coords)
 
     def start(self):
@@ -128,7 +128,7 @@ class MakeThemFallGame:
         bg_rect = background.get_rect()
         display_rect = self.gameDisplay.get_rect()
 
-        self.screen_origin[0] = (display_rect.width - bg_rect.width) / 2
+        self.screen_origin[0] = (display_rect.width - bg_rect.width) // 2
         self.visible_size = [bg_rect.width, bg_rect.height]
 
         self.gameDisplay.blit(background, self.screen_origin)
