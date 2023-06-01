@@ -22,7 +22,7 @@ class scorewindow:
         scoreboard = pygame.image.load(
             "data/images/scorescreen/scoreboard.png")
 
-        background = pygame.transform.scale(background, game.visible_size)
+        background = pygame.transform.scale(background, game.bg_dimensions)
 
         font_path = "fonts/arial.ttf"
         font_size = 50
@@ -66,14 +66,14 @@ class scorewindow:
         best = font2.render(str(best), 1, white)
 
         gameDisplay.fill(black)
-        gameDisplay.blit(background, game.screen_origin)
-        game.place_centered(gameover, game.vw(50), game.vh(10))
+        gameDisplay.blit(background, game.offset)
+        game.blit_centre(gameover, game.vw(50), game.vh(10))
 
         self.buttons = []
 
         if ifbest is True:
-            game.place_centered(newbestscore, game.vw(50), game.vh(20))
-            game.place_centered(best, game.vw(50), game.vh(22))
+            game.blit_centre(newbestscore, game.vw(50), game.vh(20))
+            game.blit_centre(best, game.vw(50), game.vh(22))
             self.buttons.append(Button(game.vw(50), game.vh(30),
                                        "data/images/scorescreen/tryagain.png",
                                        self._try_again_cb))
@@ -81,9 +81,9 @@ class scorewindow:
                                        "data/images/scorescreen/back.png",
                                        self._back_home_cb))
         else:
-            game.place_centered(scoreboard, game.vw(50), game.vh(28))
-            game.place_centered(score, game.vw(50), game.vh(24))
-            game.place_centered(best, game.vw(50), game.vh(36))
+            game.blit_centre(scoreboard, game.vw(50), game.vh(28))
+            game.blit_centre(score, game.vw(50), game.vh(24))
+            game.blit_centre(best, game.vw(50), game.vh(36))
             self.buttons.append(Button(game.vw(50), game.vh(48),
                                        "data/images/scorescreen/tryagain.png",
                                        self._try_again_cb))

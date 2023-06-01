@@ -63,8 +63,8 @@ class MakeThemFallGame:
 
         self.gameDisplay = None
         self.info = None
-        self.screen_origin = [0, 0]
-        self.visible_size = [0, 0]
+        self.offset = [0, 0]
+        self.bg_dimensions = [0, 0]
 
         self.buttons = []
 
@@ -84,8 +84,8 @@ class MakeThemFallGame:
         self.running_mode = rules()
         self.running_mode.running = self.running
         self.running_mode = self.running_mode.run(self.gameDisplay,
-                                                  self.visible_size,
-                                                  self.screen_origin)
+                                                  self.bg_dimensions,
+                                                  self.offset)
 
         self.start()
 
@@ -95,12 +95,12 @@ class MakeThemFallGame:
                 self.maxscore = pickle.load(inp)
 
     def vw(self, x):
-        return self.screen_origin[0] + (x / 100) * self.visible_size[0]
+        return self.offset[0] + (x / 100) * self.bg_dimensions[0]
 
     def vh(self, y):
-        return self.screen_origin[1] + (y / 100) * self.visible_size[1]
+        return self.offset[1] + (y / 100) * self.bg_dimensions[1]
 
-    def place_centered(self, surf, x, y):
+    def blit_centre(self, surf, x, y):
         rect = surf.get_rect()
         centered_coords = (x - rect.width // 2, y - rect.height // 2)
         self.gameDisplay.blit(surf, centered_coords)
@@ -128,10 +128,10 @@ class MakeThemFallGame:
         bg_rect = background.get_rect()
         display_rect = self.gameDisplay.get_rect()
 
-        self.screen_origin[0] = (display_rect.width - bg_rect.width) // 2
-        self.visible_size = [bg_rect.width, bg_rect.height]
+        self.offset[0] = (display_rect.width - bg_rect.width) // 2
+        self.bg_dimensions = [bg_rect.width, bg_rect.height]
 
-        self.gameDisplay.blit(background, self.screen_origin)
+        self.gameDisplay.blit(background, self.offset)
 
         font_path = "fonts/arial.ttf"
         font_size = 18
@@ -190,7 +190,7 @@ class MakeThemFallGame:
 
         howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
 
-        self.place_centered(howto, self.vw(50), self.vh(82))
+        self.blit_centre(howto, self.vw(50), self.vh(82))
 
     def run(self):
         self.start()

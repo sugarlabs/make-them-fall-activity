@@ -7,7 +7,7 @@ from gi.repository import Gtk
 
 class rules:
 
-    def run(self, gameDisplay, visible_size, screen_origin):
+    def run(self, gameDisplay, bg_dimensions, offset):
 
         disp_width = 600
 
@@ -20,7 +20,7 @@ class rules:
         back = pygame.image.load("data/images/back.png")
 
         background = pygame.transform.scale(
-            background, visible_size)
+            background, bg_dimensions)
         back = pygame.transform.scale(back, (70, 40))
 
         sound = True
@@ -38,7 +38,7 @@ class rules:
             mos_x, mos_y = pygame.mouse.get_pos()
 
             gameDisplay.fill(black)
-            gameDisplay.blit(background, screen_origin)
+            gameDisplay.blit(background, offset)
 
             if back.get_rect(center=(750 + 35, 10 + 15)).collidepoint(mos_x, mos_y):
                 gameDisplay.blit(pygame.transform.scale(
