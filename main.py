@@ -30,15 +30,11 @@ from gi.repository import Gtk
 
 from sugar3.activity.activity import get_activity_root
 
-from normal import pane2window
-from nightmare import pane3window
-from fear import pane4window
 from cardiac import pane2heartwindow
-from inferno import pane5window
-from impossible import pane6window
 from scorescreen import scorewindow
 from howtoplay import rules
 from button import Button
+from game import Game
 
 disp_width = 600
 disp_height = 600
@@ -70,13 +66,15 @@ class MakeThemFallGame:
 
         self.maxscore = [0, 0, 0, 0, 0, 0]
 
-    def run_game(self, window, gamenumber):
-        self.running_mode = window()
+    def run_game(self, gamenumber, bg_image_path, keymap, border_width=16):
+        self.running_mode = Game(bg_image_path, keymap,
+                                 border_width=border_width)
         self.running_mode.running = self.running
-        score_data = self.running_mode.run(self.gameDisplay, self.info)
+        score_data = self.running_mode.run()
 
         if scorewindow(self.gameDisplay, score_data, gamenumber, self).run():
-            self.run_game(window, gamenumber)
+            self.run_game(gamenumber, bg_image_path,
+                          keymap, border_width=border_width)
 
         self.start()
 
@@ -156,32 +154,57 @@ class MakeThemFallGame:
 
         self.buttons.append(Button(self.vw(50), self.vh(26),
                                    "data/images/welcomescreen/2pane.png",
-                                   lambda: self.run_game(pane2window, 1),
+                                   lambda:
+                                   self.run_game(1, "data/images/2pane.png",
+                                                 [[pygame.K_LEFT,
+                                                   pygame.K_RIGHT]]),
                                    maxnormal))
 
         self.buttons.append(Button(self.vw(50), self.vh(38),
                                    "data/images/welcomescreen/3pane.png",
-                                   lambda: self.run_game(pane3window, 2),
+                                   lambda:
+                                   self.run_game(2, "data/images/3pane.png",
+                                                 [[pygame.K_LEFT,
+                                                   pygame.K_DOWN,
+                                                   pygame.K_RIGHT]]),
                                    maxnightmare))
 
         self.buttons.append(Button(self.vw(20), self.vh(38),
                                    "data/images/welcomescreen/4pane.png",
-                                   lambda: self.run_game(pane4window, 3),
+                                   lambda:
+                                   self.run_game(3, "data/images/4pane.png",
+                                                 [[pygame.K_a, pygame.K_d],
+                                                  [pygame.K_LEFT,
+                                                   pygame.K_RIGHT]]),
                                    maxfear))
 
         self.buttons.append(Button(self.vw(80), self.vh(38),
                                    "data/images/welcomescreen/5pane.png",
-                                   lambda: self.run_game(pane5window, 4),
+                                   lambda:
+                                   self.run_game(4, "data/images/5pane.png",
+                                                 [[pygame.K_a,
+                                                   pygame.K_s,
+                                                   pygame.K_d],
+                                                  [pygame.K_LEFT,
+                                                   pygame.K_RIGHT]]),
                                    maxinferno))
 
         self.buttons.append(Button(self.vw(50), self.vh(50),
                                    "data/images/welcomescreen/6pane.png",
-                                   lambda: self.run_game(pane6window, 5),
+                                   lambda:
+                                   self.run_game(5, "data/images/6pane.png",
+                                                 [[pygame.K_a,
+                                                   pygame.K_s,
+                                                   pygame.K_d],
+                                                  [pygame.K_LEFT,
+                                                   pygame.K_DOWN,
+                                                   pygame.K_RIGHT]]),
                                    maximpossible))
 
         self.buttons.append(Button(self.vw(50), self.vh(62),
                                    "data/images/welcomescreen/2paneheart.png",
-                                   lambda: self.run_game(pane2heartwindow, 6),
+                                   lambda:
+                                   self.run_game(pane2heartwindow, 6),
                                    maxcardiac))
 
         self.buttons.append(Button(self.vw(50), self.vh(74),
