@@ -16,6 +16,9 @@ class Game:
                                                  (600, info.current_h))
         self.border_width = border_width
         self.speed = speed // (len(keymap))
+        
+        # Keys which control each guy (in order of 'guys' array)
+        self.keymap = [i for row in keymap for i in row]
 
         self.bg_rect = self.background.get_rect()
         self.gameDisplay = pygame.display.get_surface()
@@ -56,11 +59,6 @@ class Game:
 
         for guy in guys_config:
             self.guys.append(Guy(guy[0], guy[1]))
-
-        # Keys which control each guy (in order of 'guys' array)
-        self.keymap = []
-        for row in keymap:
-            self.keymap += row
 
         font_path = "fonts/arial.ttf"
         font_size = 50
