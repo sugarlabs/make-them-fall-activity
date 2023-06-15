@@ -24,7 +24,7 @@ class Spike:
     def update(self):
         self.draw()
         self.y -= self.speed
-        if (self.y < self.initial - self.path_length):
+        if self.y < (self.initial - self.path_length):
             return True
         return False
 
