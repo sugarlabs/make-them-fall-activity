@@ -3,9 +3,8 @@ from gi.repository import Gtk
 from generator import Generator
 from guy import Guy
 
-black = (0, 0, 0)
-white = (255, 255, 255)
-spawn_spike_event = pygame.USEREVENT + 1
+BLACK = (0, 0, 0)
+SPAWN_SPIKE_EVENT = pygame.USEREVENT + 1
 
 
 class Game:
@@ -46,7 +45,7 @@ class Game:
 
         self.spike_spawn_delay = ((self.display_rect.height / 2)
                                   / self.speed) * 20
-        pygame.time.set_timer(spawn_spike_event, int(self.spike_spawn_delay))
+        pygame.time.set_timer(SPAWN_SPIKE_EVENT, int(self.spike_spawn_delay))
 
         guys_config = []
         self.guys = []
@@ -122,7 +121,7 @@ class Game:
             self.spike_spawn_delay = ((self.display_rect.height / 2)
                                       / self.speed) * 18
 
-            self.gameDisplay.fill(black)
+            self.gameDisplay.fill(BLACK)
             self.gameDisplay.blit(self.background, self.offset)
 
             # Generate spikes and increase score
