@@ -5,14 +5,14 @@ class Spike:
 
     def __init__(self, x, y, flip, speed, path_length):
         self.graphic = pygame.image.load("data/images/Spike.png")
-        if (flip == 1):
+        if flip == 1:
             self.graphic = pygame.transform.flip(self.graphic, True, False)
         self.rect = self.graphic.get_rect()
 
         self.initial = y
 
         self.x = x
-        if (flip):
+        if flip:
             self.x -= self.rect.width
         self.y = y - self.rect.height
 

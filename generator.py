@@ -16,7 +16,7 @@ class Generator:
 
     def generate(self, speed=7):
         for i, config in enumerate(self.spikes_config):
-            if (len(self.spikes[i]) < config[3]):
+            if len(self.spikes[i]) < config[3]:
                 side = int(randint(0, 1))
                 self.spikes[i].append(Spike(config[side][0],
                                             config[side][1],
