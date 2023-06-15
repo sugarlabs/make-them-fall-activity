@@ -29,7 +29,7 @@ class Game:
         pane_coordinates = self.get_pane_coordinates(rows)
         guy_offset = 100 / (1 + (len(rows) - 1))
 
-        # format -> [left spike coords, right spike coords,
+        # format -> [left_spike_coords, right_spike_coords,
         #           path_length, max_spikes]
         spikes_config = []
 
