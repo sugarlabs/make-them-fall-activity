@@ -125,10 +125,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     return
                 # Manage jumps
-                for i, key in enumerate(self.keymap):
-                    if event.type == pygame.KEYDOWN and event.key == key:
-                        self.play_sound("jump")
-                        self.guys[i].move()
+                if event.type == pygame.KEYDOWN:
+                    for i, key in enumerate(self.keymap):
+                        if event.key == key:
+                            self.play_sound("jump")
+                            self.guys[i].move()
 
             # Assign speed as per score
             self.speed = 7 + self.score // 8
