@@ -12,9 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Contact information:
-# Riya Jain   riya1jain567@gmail.com
 
 
 from spike import Spike
