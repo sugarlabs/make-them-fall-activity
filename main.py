@@ -33,6 +33,7 @@ from sugar3.activity.activity import get_activity_root
 from cardiac import pane2heartwindow
 from scorescreen import scorewindow
 from howtoplay import rules
+from settings import settings
 from button import Button
 from game import Game
 
@@ -66,8 +67,10 @@ class MakeThemFallGame:
 
         self.maxscore = [0, 0, 0, 0, 0, 0]
 
+        self.config = {"difficulty": 1}
+
     def run_game(self, gamenumber, bg_image_path, keymap, border_width=16):
-        self.running_mode = Game(bg_image_path, keymap,
+        self.running_mode = Game(bg_image_path, keymap, self.config,
                                  border_width=border_width)
         self.running_mode.running = self.running
         score_data = self.running_mode.run()
@@ -84,6 +87,16 @@ class MakeThemFallGame:
         self.running_mode = self.running_mode.run(self.gameDisplay,
                                                   self.bg_dimensions,
                                                   self.offset)
+
+        self.start()
+
+    def show_settings(self):
+        self.running_mode = settings()
+        self.running_mode.running = self.running
+        self.running_mode = self.running_mode.run(self.gameDisplay,
+                                                  self.bg_dimensions,
+                                                  self.offset,
+                                                  self.config)
 
         self.start()
 
@@ -207,13 +220,13 @@ class MakeThemFallGame:
                                    self.run_game(pane2heartwindow, 6),
                                    maxcardiac))
 
-        self.buttons.append(Button(self.vw(50), self.vh(74),
+        self.buttons.append(Button(self.vw(25), self.vh(75),
                                    "data/images/welcomescreen/help.png",
                                    self.show_help))
 
-        howto = pygame.image.load("data/images/welcomescreen/howtoplay.png")
-
-        self.blit_centre(howto, self.vw(50), self.vh(82))
+        self.buttons.append(Button(self.vw(75), self.vh(75),
+                                   "data/images/welcomescreen/settings.png",
+                                   self.show_settings))
 
     def run(self):
         self.start()
