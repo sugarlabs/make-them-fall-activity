@@ -25,14 +25,21 @@ SPAWN_SPIKE_EVENT = pygame.USEREVENT + 1
 
 class Game:
 
-    def __init__(self, bg_image_path, keymap, border_width=16, speed=7):
+    def __init__(self, bg_image_path, keymap, config,
+                 border_width=16, speed=7):
         info = pygame.display.Info()
         self.background = pygame.image.load(bg_image_path)
         self.background = pygame.transform.scale(self.background,
                                                  (600, info.current_h))
+
+        self.config = config
+        self.speed_multiplier = [0.7, 1, 1.3][config["difficulty"]]
+        self.score_multiplier = [0.5, 1, 2][config["difficulty"]]
+
         self.border_width = border_width
-        self.speed = speed // (len(keymap))
-        
+        self.speed = speed * self.speed_multiplier // (len(keymap))
+        self.base_speed = self.speed
+
         # Keys which control each guy (in order of 'guys' array)
         self.keymap = [i for row in keymap for i in row]
 
@@ -60,7 +67,7 @@ class Game:
         self.generator = Generator()
         self.generator.configure(spikes_config)
         if len(rows) == 1:
-            self.generator.generate()
+            self.generator.generate(self.speed)
 
         self.spike_spawn_delay = ((self.display_rect.height / 2)
                                   / self.speed) * 20
@@ -109,7 +116,7 @@ class Game:
         return coordinates  # Array of [top-left coords, bottom-right coords]
 
     def show_score(self):
-        scores = self.font1.render(str(self.score), 1, (0, 0, 0))
+        scores = self.font1.render(str(int(self.score)), 1, (0, 0, 0))
         self.gameDisplay.blit(scores, (200 + 650, 30))
 
     def play_sound(self, sound_name):
@@ -132,7 +139,7 @@ class Game:
                             self.guys[i].move()
 
             # Assign speed as per score
-            self.speed = 7 + self.score // 8
+            self.speed = (self.base_speed * self.speed_multiplier) + self.score // 8
             self.spike_spawn_delay = ((self.display_rect.height / 2)
                                       / self.speed) * 18
 
@@ -142,7 +149,7 @@ class Game:
             # Generate spikes and increase score
             if self.last_spawned + self.spike_spawn_delay < pygame.time.get_ticks():
                 self.generator.generate(self.speed)
-                self.score += 1
+                self.score += 1 * self.score_multiplier
                 self.play_sound("score")
                 self.last_spawned = pygame.time.get_ticks()
 
@@ -151,7 +158,7 @@ class Game:
             # updates
             if self.generator.update(self.guys):
                 # returns true if player is dead
-                return self.score
+                return int(self.score)
             for guy in self.guys:
                 guy.update()
 
