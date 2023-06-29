@@ -19,12 +19,16 @@ import pygame
 
 class Button:
 
-    def __init__(self, x, y, image_path, action, text=None):
+    def __init__(self, x, y, image_path, action, text=None, scale=None):
         self.graphic = pygame.image.load(image_path)
+
+        if scale is not None:
+            self.graphic = pygame.transform.scale(self.graphic, scale)
+
         self.rect = self.graphic.get_rect()
 
         self.x = x - self.rect.width // 2
-        self.y = y - self.rect.height //  2
+        self.y = y - self.rect.height // 2
         self.rect.x = self.x
         self.rect.y = self.y
 
