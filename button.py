@@ -22,7 +22,7 @@ class Button:
     def __init__(self, x, y, image_path, action, text=None, scale=None):
         self.graphic = pygame.image.load(image_path)
 
-        if scale is not None:
+        if scale:
             self.graphic = pygame.transform.scale(self.graphic, scale)
 
         self.rect = self.graphic.get_rect()
