@@ -58,9 +58,10 @@ class settings:
             # Gtk events
             while Gtk.events_pending():
                 Gtk.main_iteration()
-            event = pygame.event.poll()
-            if event.type == pygame.QUIT:
-                return
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return
 
             gameDisplay.fill(black)
 
