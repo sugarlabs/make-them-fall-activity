@@ -32,9 +32,9 @@ class Game:
         self.background = pygame.transform.scale(self.background,
                                                  (600, info.current_h))
 
-        self.config = config
-        self.speed_multiplier = [0.7, 1, 1.3][config["difficulty"]]
-        self.score_multiplier = [0.5, 1, 2][config["difficulty"]]
+        difficulty = config.get("difficulty", 1)
+        self.speed_multiplier = [0.7, 1, 1.3][difficulty]
+        self.score_multiplier = [0.5, 1, 2][difficulty]
 
         self.border_width = border_width
         self.speed = speed * self.speed_multiplier // (len(keymap))
