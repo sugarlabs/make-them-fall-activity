@@ -74,7 +74,7 @@ class settings:
 
             # Update difficulty text in button
             self.buttons[1].text = font1.render(["Easy", "Normal", "Hard"]
-                                                [self.config["difficulty"]],
+                                                [self.config.get("difficulty")],
                                                 True, black)
 
             for btn in self.buttons:
