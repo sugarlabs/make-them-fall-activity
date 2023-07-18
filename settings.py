@@ -1,14 +1,21 @@
 
 import pygame
 from gi.repository import Gtk
+from gi.repository import Gdk
 from button import Button
+
+
+def color_parse(color):
+    rgba = Gdk.RGBA()
+    rgba.parse(color)
+    return (int(rgba.red * 255), int(rgba.green * 255), int(rgba.blue * 255))
 
 
 class settings:
 
     def run(self, gameDisplay, bg_dimensions, offset, config):
-        black = (0, 0, 0)
-        bg_color = (248, 237, 221)
+        black = color_parse("black")
+        bg_color = color_parse("beige")
         clock = pygame.time.Clock()
 
         self.gameDisplay = gameDisplay
