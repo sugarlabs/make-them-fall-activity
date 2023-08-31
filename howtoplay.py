@@ -2,12 +2,7 @@ import pygame
 from gi.repository import Gdk
 from gi.repository import Gtk
 from button import Button
-
-
-def color_parse(color):
-    rgba = Gdk.RGBA()
-    rgba.parse(color)
-    return (int(rgba.red * 255), int(rgba.green * 255), int(rgba.blue * 255))
+from settings import color_parse
 
 
 class rules:
