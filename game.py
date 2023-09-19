@@ -26,7 +26,7 @@ SPAWN_SPIKE_EVENT = pygame.USEREVENT + 1
 class Game:
 
     def __init__(self, bg_image_path, keymap, config,
-                 border_width=16, speed=7):
+                 border_width=16, speed=7, _type="spikes"):
         info = pygame.display.Info()
         self.background = pygame.image.load(bg_image_path)
         self.background = pygame.transform.scale(self.background,
@@ -65,7 +65,13 @@ class Game:
                                   pane_height, 4])
 
         self.generator = Generator()
-        self.generator.configure(spikes_config)
+        if _type == "spikes":
+            self.generator.configure(spikes_config, "spike")
+        elif _type == "cardiac":
+            self.generator.configure(spikes_config, "heart")
+        else:
+            raise Exception("Incorrect game mode")
+
         if len(rows) == 1:
             self.generator.generate(self.speed)
 

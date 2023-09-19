@@ -30,7 +30,6 @@ from gi.repository import Gtk
 
 from sugar3.activity.activity import get_activity_root
 
-from cardiac import pane2heartwindow
 from scorescreen import scorewindow
 from howtoplay import rules
 from settings import settings
@@ -69,15 +68,16 @@ class MakeThemFallGame:
 
         self.config = {"difficulty": 1}
 
-    def run_game(self, gamenumber, bg_image_path, keymap, border_width=16):
+    def run_game(self, gamenumber, bg_image_path, keymap, border_width=16, _type = "spikes"):
         self.running_mode = Game(bg_image_path, keymap, self.config,
-                                 border_width=border_width)
+                                 border_width=border_width, _type = _type)
         self.running_mode.running = self.running
         score_data = self.running_mode.run()
 
         if scorewindow(self.gameDisplay, score_data, gamenumber, self).run():
             self.run_game(gamenumber, bg_image_path,
-                          keymap, border_width=border_width)
+                          keymap, border_width=border_width,
+                          _type = _type)
 
         self.start()
 
@@ -217,7 +217,10 @@ class MakeThemFallGame:
         self.buttons.append(Button(self.vw(50), self.vh(62),
                                    "data/images/welcomescreen/2paneheart.png",
                                    lambda:
-                                   self.run_game(pane2heartwindow, 6),
+                                   self.run_game(6, "data/images/2pane.png",
+                                                 [[pygame.K_LEFT,
+                                                   pygame.K_RIGHT]],
+                                                 _type = "cardiac"),
                                    maxcardiac))
 
         self.buttons.append(Button(self.vw(25), self.vh(75),
