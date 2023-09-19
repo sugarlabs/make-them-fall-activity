@@ -25,8 +25,8 @@ class Generator:
         self.items = []
         self.type = "spike"
 
-    def configure(self, config, _type = "spike"):
-        self.type = _type
+    def configure(self, config, type_="spike"):
+        self.type = type_
         self.items = []
         self.items_config = config
         for _ in range(len(self.items_config)):
@@ -39,7 +39,7 @@ class Generator:
                 self.items[i].append(FallItem(config[side][0],
                                             config[side][1],
                                             side, speed, config[2],
-                                            _type = self.type))
+                                            type_=self.type))
 
     def update(self, guys=[]):
         for i, section_items in enumerate(self.items):
