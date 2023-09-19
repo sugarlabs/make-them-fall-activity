@@ -68,3 +68,6 @@ class Guy:
                                  other_height)
         if self_rect.colliderect(other_rect):
             return True
+
+    def check_missed(self, other_y, other_height):
+        return self.y > other_y + other_height
