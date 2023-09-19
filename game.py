@@ -48,6 +48,7 @@ class Game:
         self.display_rect = self.gameDisplay.get_rect()
         self.offset = [0, 0]
         self.offset[0] = (self.display_rect.width - self.bg_rect.width) // 2
+        self.type = type_
 
         rows = [len(i) for i in keymap]
 
@@ -65,9 +66,9 @@ class Game:
                                   pane_height, 4])
 
         self.generator = Generator()
-        if type_ == "spikes":
+        if self.type == "spikes":
             self.generator.configure(spikes_config, "spike")
-        elif type_ == "cardiac":
+        elif self.type == "cardiac":
             self.generator.configure(spikes_config, "heart")
         else:
             raise Exception("Incorrect game mode")
