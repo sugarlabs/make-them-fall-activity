@@ -19,11 +19,11 @@ import pygame
 
 class FallItem:
 
-    def __init__(self, x, y, flip, speed, path_length, _type = "spike"):
+    def __init__(self, x, y, flip, speed, path_length, type_="spike"):
         self.x = x
         self.initial = y
 
-        self.type = _type
+        self.type = type_
 
         self.graphic = pygame.image.load("data/images/Spike.png")
         if self.type == "heart":

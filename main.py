@@ -68,16 +68,16 @@ class MakeThemFallGame:
 
         self.config = {"difficulty": 1}
 
-    def run_game(self, gamenumber, bg_image_path, keymap, border_width=16, _type = "spikes"):
+    def run_game(self, gamenumber, bg_image_path, keymap, border_width=16, type_="spikes"):
         self.running_mode = Game(bg_image_path, keymap, self.config,
-                                 border_width=border_width, _type = _type)
+                                 border_width=border_width, type_=type_)
         self.running_mode.running = self.running
         score_data = self.running_mode.run()
 
         if scorewindow(self.gameDisplay, score_data, gamenumber, self).run():
             self.run_game(gamenumber, bg_image_path,
                           keymap, border_width=border_width,
-                          _type = _type)
+                          type_=type_)
 
         self.start()
 
@@ -220,7 +220,7 @@ class MakeThemFallGame:
                                    self.run_game(6, "data/images/2pane.png",
                                                  [[pygame.K_LEFT,
                                                    pygame.K_RIGHT]],
-                                                 _type = "cardiac"),
+                                                 type_="cardiac"),
                                    maxcardiac))
 
         self.buttons.append(Button(self.vw(25), self.vh(75),
