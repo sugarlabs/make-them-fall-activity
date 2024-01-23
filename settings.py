@@ -18,6 +18,16 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from button import Button
 
+DIFF = (255, 87, 34)
+MED = (255, 193, 7)
+EASY = (76, 175, 80)
+
+def darken_color(color, factor):
+    return tuple(int(component * factor) for component in color)
+
+DIFF_HOVER = darken_color(DIFF, 0.8)  
+MED_HOVER = darken_color(MED, 0.8)
+EASY_HOVER = darken_color(EASY, 0.8)
 
 def color_parse(color):
     rgba = Gdk.RGBA()
@@ -41,19 +51,17 @@ class settings:
         font_path = "fonts/arial.ttf"
         font1 = pygame.font.Font(font_path, 18)
         font2 = pygame.font.Font(font_path, 44)
-
         # Buttons
         self.buttons.append(Button(offset[0] + bg_dimensions[0] - 70, 45,
-                                   "data/images/back.png",
-                                   self.back_action,
+                                   image_path="data/images/back.png",
+                                   action=self.back_action,
                                    scale=(70, 40)))
-        self.buttons.append(Button(offset[0] + bg_dimensions[0] / 2, 160,
-                                   "data/images/button-difficulty.png",
-                                   self.change_difficulty,
-                                   text=font1.render("Normal", True, black)))
+        self.buttons.append(Button(offset[0]+bg_dimensions[0]/2, 200,"EASY", colors=(EASY,EASY_HOVER),action=self.change_difficulty,scale=(400,100),gid=0,config=self.config))
+        self.buttons.append(Button(offset[0]+bg_dimensions[0]/2, 400,"MEDIUM", colors=(MED,MED_HOVER),action=self.change_difficulty,scale=(400,100),gid=1,config=self.config))
+        self.buttons.append(Button(offset[0]+bg_dimensions[0]/2, 600,"DIFFICULT", colors=(DIFF,DIFF_HOVER),action=self.change_difficulty,scale=(400,100),gid=2,config=self.config))
 
         title = font2.render("SETTINGS", True, black)
-
+        c=0
         while self.running:
             # Gtk events
             while Gtk.events_pending():
@@ -74,9 +82,10 @@ class settings:
                 return
 
             # Update difficulty text in button
-            self.buttons[1].text = font1.render(["Easy", "Normal", "Hard"]
-                                                [self.config.get("difficulty")],
-                                                True, black)
+            # self.buttons[1].text = font1.render(["Easy", "Normal", "Hard"]
+            #                                     [self.config.get("difficulty")],
+            #                                     True, black)
+            # self.buttons[1].text = "Jasleen"
 
             for btn in self.buttons:
                 btn.update()
@@ -92,5 +101,7 @@ class settings:
         centered_coords = (x - rect.width // 2, y - rect.height // 2)
         self.gameDisplay.blit(surf, centered_coords)
 
-    def change_difficulty(self):
-        self.config["difficulty"] = (self.config["difficulty"] + 1) % 3
+    def change_difficulty(self,number):
+        self.config["difficulty"] = number
+        # self.buttons[number+1].update()
+

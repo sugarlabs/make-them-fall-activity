@@ -75,21 +75,21 @@ class scorewindow:
             game.blit_centre(newbestscore, game.vw(50), game.vh(20))
             game.blit_centre(best, game.vw(50), game.vh(22))
             self.buttons.append(Button(game.vw(50), game.vh(30),
-                                       "data/images/scorescreen/tryagain.png",
-                                       self._try_again_cb))
+                                       image_path="data/images/scorescreen/tryagain.png",
+                                       action=self._try_again_cb))
             self.buttons.append(Button(game.vw(50), game.vh(40),
-                                       "data/images/scorescreen/back.png",
-                                       self._back_home_cb))
+                                       image_path="data/images/scorescreen/back.png",
+                                       action=self._back_home_cb))
         else:
             game.blit_centre(scoreboard, game.vw(50), game.vh(28))
             game.blit_centre(score, game.vw(50), game.vh(24))
             game.blit_centre(best, game.vw(50), game.vh(36))
             self.buttons.append(Button(game.vw(50), game.vh(48),
-                                       "data/images/scorescreen/tryagain.png",
-                                       self._try_again_cb))
+                                       image_path="data/images/scorescreen/tryagain.png",
+                                       action=self._try_again_cb))
             self.buttons.append(Button(game.vw(50), game.vh(60),
-                                       "data/images/scorescreen/back.png",
-                                       self._back_home_cb))
+                                       image_path="data/images/scorescreen/back.png",
+                                       action=self._back_home_cb))
 
         self.running = True
 
