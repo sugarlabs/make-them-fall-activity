@@ -42,27 +42,26 @@ class MakeThemFallActivity(Activity):
         toolbar_box.toolbar.insert(activity_button, -1)
         activity_button.show()
 
-        separator = Gtk.SeparatorToolItem()
-        separator.props.draw = False
-        separator.set_expand(False)
-        toolbar_box.toolbar.insert(separator, -1)
-        separator.show()
+        self.add_toolbar_separator(toolbar_box)
 
         button = ToolButton('speaker-muted-100')
         button.set_tooltip(_('Sound'))
         button.connect('clicked', self.sound_control)
         toolbar_box.toolbar.insert(button, -1)
 
-        separator = Gtk.SeparatorToolItem()
-        separator.props.draw = False
-        separator.set_expand(True)
-        toolbar_box.toolbar.insert(separator, -1)
-        separator.show()
+        self.add_toolbar_separator(toolbar_box, expand=True)
 
         stop_button = StopButton(self)
         toolbar_box.toolbar.insert(stop_button, -1)
         stop_button.show()
         stop_button.connect('clicked', self._stop_cb)
+
+    def add_toolbar_separator(self, toolbar_box, expand=False):
+        separator = Gtk.SeparatorToolItem()
+        separator.props.draw = False
+        separator.set_expand(expand)
+        toolbar_box.toolbar.insert(separator, -1)
+        separator.show()
 
     def sound_control(self, button):
         self.sound = not self.sound
