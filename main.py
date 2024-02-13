@@ -212,7 +212,6 @@ class MakeThemFallGame:
                                    "data/images/welcomescreen/settings.png",
                                    self.show_settings))
 
-
     def run(self):
         self.start()
 
