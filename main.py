@@ -165,52 +165,65 @@ class MakeThemFallGame:
         maxcardiac = font1.render(
             "Best: " + str(self.maxscore[5]), True, black)
 
-        button_positions = [
-            (50, 26),  # (x, y) for the 2-pane button
-            (50, 38),  # (x, y) for the 3-pane button
-            (20, 38),  # (x, y) for the 4-pane button
-            (80, 38),  # (x, y) for the 5-pane button
-            (50, 50),  # (x, y) for the 6-pane button
-            (50, 62),  # (x, y) for the 2-pane-heart button
-            (25, 75),  # (x, y) for the help button
-            (75, 75)   # (x, y) for the settings button
+        button_data = [
+            {
+                'position': (50, 26),
+                'image_path': "data/images/welcomescreen/2pane.png",
+                'function': lambda: self.run_game(1, "data/images/2pane.png", [[pygame.K_LEFT, pygame.K_RIGHT]]),
+                'max_score': maxnormal
+            },
+            {
+                'position': (50, 38),
+                'image_path': "data/images/welcomescreen/3pane.png",
+                'function': lambda: self.run_game(2, "data/images/3pane.png", [[pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]]),
+                'max_score': maxnightmare
+            },
+            {
+                'position': (20, 38),
+                'image_path': "data/images/welcomescreen/4pane.png",
+                'function': lambda: self.run_game(3, "data/images/4pane.png", [[pygame.K_a, pygame.K_d], [pygame.K_LEFT, pygame.K_RIGHT]]),
+                'max_score': maxfear
+            },
+            {
+                'position': (80, 38),
+                'image_path': "data/images/welcomescreen/5pane.png",
+                'function': lambda: self.run_game(4, "data/images/5pane.png", [[pygame.K_a, pygame.K_s, pygame.K_d], [pygame.K_LEFT, pygame.K_RIGHT]]),
+                'max_score': maxinferno
+            },
+            {
+                'position': (50, 50),
+                'image_path': "data/images/welcomescreen/6pane.png",
+                'function': lambda: self.run_game(5, "data/images/6pane.png", [[pygame.K_a, pygame.K_s, pygame.K_d], [pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]]),
+                'max_score': maximpossible
+            },
+            {
+                'position': (50, 62),
+                'image_path': "data/images/welcomescreen/2paneheart.png",
+                'function': lambda: self.run_game(6, "data/images/2pane.png", [[pygame.K_LEFT, pygame.K_RIGHT]], type_="cardiac"),
+                'max_score': maxcardiac
+            },
+            {
+                'position': (25, 75),
+                'image_path': "data/images/welcomescreen/help.png",
+                'function': self.show_help,
+                'max_score': None
+            },
+            {
+                'position': (75, 75),
+                'image_path': "data/images/welcomescreen/settings.png",
+                'function': self.show_settings,
+                'max_score': None
+            }
         ]
 
-        button_images = [
-            "data/images/welcomescreen/2pane.png",
-            "data/images/welcomescreen/3pane.png",
-            "data/images/welcomescreen/4pane.png",
-            "data/images/welcomescreen/5pane.png",
-            "data/images/welcomescreen/6pane.png",
-            "data/images/welcomescreen/2paneheart.png",
-            "data/images/welcomescreen/help.png",
-            "data/images/welcomescreen/settings.png"
-        ]
-
-        button_functions = [
-            lambda: self.run_game(1, "data/images/2pane.png", [[pygame.K_LEFT, pygame.K_RIGHT]]),
-            lambda: self.run_game(2, "data/images/3pane.png", [[pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]]),
-            lambda: self.run_game(3, "data/images/4pane.png", [[pygame.K_a, pygame.K_d], [pygame.K_LEFT, pygame.K_RIGHT]]),
-            lambda: self.run_game(4, "data/images/5pane.png", [[pygame.K_a, pygame.K_s, pygame.K_d], [pygame.K_LEFT, pygame.K_RIGHT]]),
-            lambda: self.run_game(5, "data/images/6pane.png", [[pygame.K_a, pygame.K_s, pygame.K_d], [pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]]),
-            lambda: self.run_game(6, "data/images/2pane.png", [[pygame.K_LEFT, pygame.K_RIGHT]], type_="cardiac"),
-            self.show_help,
-            self.show_settings
-        ]
-
-        maxscores = [maxnormal, maxnightmare, maxfear, maxinferno, maximpossible, maxcardiac]
-
-        for pos, img, func, maxscore in zip(button_positions, button_images, button_functions, maxscores):
-            x, y = pos
-            self.buttons.append(Button(self.vw(x), self.vh(y), img, func, maxscore))
+        for button_info in button_data:
+            position = button_info['position']
+            image_path = button_info['image_path']
+            function = button_info['function']
+            max_score = button_info['max_score']
             
-        self.buttons.append(Button(self.vw(25), self.vh(75),
-                                   "data/images/welcomescreen/help.png",
-                                   self.show_help))
-
-        self.buttons.append(Button(self.vw(75), self.vh(75),
-                                   "data/images/welcomescreen/settings.png",
-                                   self.show_settings))
+            x, y = position
+            self.buttons.append(Button(self.vw(x), self.vh(y), image_path, function, max_score))
 
     def run(self):
         self.start()
