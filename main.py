@@ -169,37 +169,59 @@ class MakeThemFallGame:
             {
                 'position': (50, 26),
                 'image_path': "data/images/welcomescreen/2pane.png",
-                'function': lambda: self.run_game(1, "data/images/2pane.png", [[pygame.K_LEFT, pygame.K_RIGHT]]),
+                'function': lambda: self.run_game(1, "data/images/2pane.png",
+                                                 [[pygame.K_LEFT,
+                                                   pygame.K_RIGHT]]),
                 'max_score': maxnormal
             },
             {
                 'position': (50, 38),
                 'image_path': "data/images/welcomescreen/3pane.png",
-                'function': lambda: self.run_game(2, "data/images/3pane.png", [[pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]]),
+                'function': lambda: self.run_game(2, "data/images/3pane.png",
+                                                 [[pygame.K_LEFT,
+                                                   pygame.K_DOWN,
+                                                   pygame.K_RIGHT]]),
                 'max_score': maxnightmare
             },
             {
                 'position': (20, 38),
                 'image_path': "data/images/welcomescreen/4pane.png",
-                'function': lambda: self.run_game(3, "data/images/4pane.png", [[pygame.K_a, pygame.K_d], [pygame.K_LEFT, pygame.K_RIGHT]]),
+                'function': lambda: self.run_game(3, "data/images/4pane.png",
+                                                 [[pygame.K_a, pygame.K_d],
+                                                  [pygame.K_LEFT,
+                                                   pygame.K_RIGHT]]),
                 'max_score': maxfear
             },
             {
                 'position': (80, 38),
                 'image_path': "data/images/welcomescreen/5pane.png",
-                'function': lambda: self.run_game(4, "data/images/5pane.png", [[pygame.K_a, pygame.K_s, pygame.K_d], [pygame.K_LEFT, pygame.K_RIGHT]]),
+                'function': lambda: self.run_game(4, "data/images/5pane.png",
+                                                 [[pygame.K_a,
+                                                   pygame.K_s,
+                                                   pygame.K_d],
+                                                  [pygame.K_LEFT,
+                                                   pygame.K_RIGHT]]),
                 'max_score': maxinferno
             },
             {
                 'position': (50, 50),
                 'image_path': "data/images/welcomescreen/6pane.png",
-                'function': lambda: self.run_game(5, "data/images/6pane.png", [[pygame.K_a, pygame.K_s, pygame.K_d], [pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]]),
+                'function': lambda: self.run_game(5, "data/images/6pane.png",
+                                                 [[pygame.K_a,
+                                                   pygame.K_s,
+                                                   pygame.K_d],
+                                                  [pygame.K_LEFT,
+                                                   pygame.K_DOWN,
+                                                   pygame.K_RIGHT]]),
                 'max_score': maximpossible
             },
             {
                 'position': (50, 62),
                 'image_path': "data/images/welcomescreen/2paneheart.png",
-                'function': lambda: self.run_game(6, "data/images/2pane.png", [[pygame.K_LEFT, pygame.K_RIGHT]], type_="cardiac"),
+                'function': lambda: self.run_game(6, "data/images/2pane.png",
+                                                 [[pygame.K_LEFT,
+                                                   pygame.K_RIGHT]],
+                                                 type_="cardiac"),
                 'max_score': maxcardiac
             },
             {
