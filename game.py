@@ -32,6 +32,7 @@ class Game:
         self.background = pygame.transform.scale(self.background,
                                                  (600, info.current_h))
 
+        self.config = config
         difficulty = config.get("difficulty", 1)
         self.speed_multiplier = [0.7, 1, 1.3][difficulty]
         self.score_multiplier = [0.5, 1, 2][difficulty]
@@ -127,7 +128,8 @@ class Game:
         self.gameDisplay.blit(scores, (200 + 650, 30))
 
     def play_sound(self, sound_name):
-        self.sounds[sound_name].play()
+        if not self.config["muted"]:
+            self.sounds[sound_name].play()
 
     def run(self):
         while self.running:

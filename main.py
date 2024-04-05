@@ -66,7 +66,10 @@ class MakeThemFallGame:
 
         self.maxscore = [0, 0, 0, 0, 0, 0]
 
-        self.config = {"difficulty": 1}
+        self.config = {
+            "difficulty": 1,
+            "muted": False
+        }
 
     def run_game(self, gamenumber, bg_image_path, keymap, border_width=16, type_="spikes"):
         self.running_mode = Game(bg_image_path, keymap, self.config,
