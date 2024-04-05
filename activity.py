@@ -48,6 +48,7 @@ class MakeThemFallActivity(Activity):
         button.set_tooltip(_('Sound'))
         button.connect('clicked', self.sound_control)
         toolbar_box.toolbar.insert(button, -1)
+        button.show()
 
         self.add_toolbar_separator(toolbar_box, expand=True)
 
@@ -65,7 +66,7 @@ class MakeThemFallActivity(Activity):
 
     def sound_control(self, button):
         self.sound = not self.sound
-        self.game.sound = self.sound
+        self.game.config["muted"] = not self.game.config["muted"]
         if not self.sound:
             button.set_icon_name('speaker-muted-000')
             button.set_tooltip(_('No sound'))
