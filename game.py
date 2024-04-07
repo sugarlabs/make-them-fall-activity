@@ -124,8 +124,19 @@ class Game:
         return coordinates  # Array of [top-left coords, bottom-right coords]
 
     def show_score(self):
-        scores = self.font1.render(str(int(self.score)), 1, (0, 0, 0))
-        self.gameDisplay.blit(scores, (200 + 650, 30))
+        scores = self.font1.render(str(int(self.score)), 1, "white")
+        scores_rect = scores.get_rect(
+            midtop=(self.gameDisplay.get_width() / 2, 30)
+        )
+        padding = 10
+        score_bg_rect = pygame.Rect(
+            scores_rect.left - padding,
+            scores_rect.top - padding,
+            scores_rect.width + (2 * padding),
+            scores_rect.height + (2 * padding)
+        )
+        pygame.draw.rect(self.gameDisplay, (27, 37, 47), score_bg_rect, 0, 7)
+        self.gameDisplay.blit(scores, scores_rect)
 
     def play_sound(self, sound_name):
         if not self.config["muted"]:
@@ -163,14 +174,14 @@ class Game:
                     self.play_sound("score")
                 self.last_spawned = pygame.time.get_ticks()
 
-            self.show_score()
-
             # updates
             if self.generator.update(self.speed, self.guys):
                 # returns true if player is dead
                 return int(self.score)
             for guy in self.guys:
                 guy.update()
+
+            self.show_score()
 
             pygame.display.update()
             self.clock.tick(60)
