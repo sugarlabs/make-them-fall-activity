@@ -159,7 +159,8 @@ class Game:
                             self.guys[i].move()
 
             # Assign speed as per score
-            self.speed = self.base_speed + self.score // 8
+            if self.speed < self.base_speed * 2:
+                self.speed = self.base_speed + self.score // 12
             self.spike_spawn_delay = ((self.display_rect.height / 2)
                                       / self.speed) * 18
 
