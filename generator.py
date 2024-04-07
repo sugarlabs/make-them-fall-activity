@@ -32,16 +32,16 @@ class Generator:
         for _ in range(len(self.items_config)):
             self.items.append([])
 
-    def generate(self, speed=7):
+    def generate(self):
         for i, config in enumerate(self.items_config):
             if len(self.items[i]) < config[3]:
                 side = int(randint(0, 1))
                 self.items[i].append(FallItem(config[side][0],
                                             config[side][1],
-                                            side, speed, config[2],
+                                            side, config[2],
                                             type_=self.type))
 
-    def update(self, guys=[]):
+    def update(self, fallitem_speed, guys=[]):
         for i, section_items in enumerate(self.items):
             for j, item in enumerate(section_items):
                 for guy in guys:
@@ -59,6 +59,6 @@ class Generator:
                         del self.items[i][j]
                         return True
                         
-                if item.update():
+                if item.update(fallitem_speed):
                     del self.items[i][j]
         return False
