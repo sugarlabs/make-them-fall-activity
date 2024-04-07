@@ -75,7 +75,7 @@ class Game:
             raise Exception("Incorrect game mode")
 
         if len(rows) == 1:
-            self.generator.generate(self.speed)
+            self.generator.generate()
 
         self.spike_spawn_delay = ((self.display_rect.height / 2)
                                   / self.speed) * 20
@@ -148,7 +148,7 @@ class Game:
                             self.guys[i].move()
 
             # Assign speed as per score
-            self.speed = (self.base_speed * self.speed_multiplier) + self.score // 8
+            self.speed = self.base_speed + self.score // 8
             self.spike_spawn_delay = ((self.display_rect.height / 2)
                                       / self.speed) * 18
 
@@ -157,15 +157,16 @@ class Game:
 
             # Generate spikes and increase score
             if self.last_spawned + self.spike_spawn_delay < pygame.time.get_ticks():
-                self.generator.generate(self.speed)
+                self.generator.generate()
                 self.score += 1 * self.score_multiplier
-                self.play_sound("score")
+                if int(self.score) == self.score:
+                    self.play_sound("score")
                 self.last_spawned = pygame.time.get_ticks()
 
             self.show_score()
 
             # updates
-            if self.generator.update(self.guys):
+            if self.generator.update(self.speed, self.guys):
                 # returns true if player is dead
                 return int(self.score)
             for guy in self.guys:

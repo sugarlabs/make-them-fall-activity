@@ -19,7 +19,7 @@ import pygame
 
 class FallItem:
 
-    def __init__(self, x, y, flip, speed, path_length, type_="spike"):
+    def __init__(self, x, y, flip, path_length, type_="spike"):
         self.x = x
         self.initial = y
 
@@ -39,12 +39,11 @@ class FallItem:
 
         self.gameDisplay = pygame.display.get_surface()
 
-        self.speed = speed
         self.path_length = path_length
 
-    def update(self):
+    def update(self, fallitem_speed):
         self.draw()
-        self.y -= self.speed
+        self.y -= fallitem_speed
         if self.y < (self.initial - self.path_length):
             return True
         return False
